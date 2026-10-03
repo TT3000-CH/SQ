@@ -1,0 +1,50 @@
+QUELLEN UND DATENSTAND - SWIZQUIZ TABLET 2.0.0
+================================================
+
+1. Bereitgestellte Originaldatei
+   SwizQuiz (1).html
+   SHA-256: d2194b63421ec00a259547548f1a5eb157bfff2aea56f918fed43bfc1164389b
+
+   Die gesamte R-Datentabelle (26 Zeilen, 10 Felder pro Zeile) wurde automatisch
+   auf Gleichheit mit der Originaldatei geprüft. Die Benennungen und Werte der
+   Kategorien wurden beibehalten. Die Ausgabe nennt die Werte daher nicht als
+   neu geprüfte oder tagesaktuelle amtliche Statistik.
+
+2. Kantonskarte und Umrisse: Quelle der Original-HTML
+   https://unpkg.com/swiss-maps@4/2021/ch-combined.json
+   Alternative Auslieferung desselben Pakets:
+   https://cdn.jsdelivr.net/npm/swiss-maps@4/2021/ch-combined.json
+   Projekt:
+   https://github.com/interactivethings/swiss-maps
+
+   Quellenangabe in der App: Bundesamt für Statistik (BFS), GEOSTAT.
+   Das Projekt unterscheidet zwischen der Softwarelizenz und den Nutzungsregeln
+   der Geodaten; die Projektangabe beschreibt die Geodaten als nichtkommerziell
+   nutzbar mit Quellenangabe. Bei anderer Nutzung die dortigen Bedingungen prüfen.
+
+3. Nachbarländer der Karte: Quelle der Original-HTML
+   https://cdn.jsdelivr.net/npm/world-geojson@3.4.0/countries/
+   Die Vorlage verwendet Germany, France, Italy, Austria und Liechtenstein.
+   Sie werden als Kartenkontext geladen, nicht als zusätzliche Quizländer.
+
+4. Kantonsflaggen: Wikimedia Commons, wie in der Original-HTML
+   https://commons.wikimedia.org/
+   https://upload.wikimedia.org/wikipedia/commons/
+
+   Die Tablet-Version versucht die in der Vorlage verwendeten Kantonsnamen
+   und alternativen Dateititel und verwendet bei Bedarf die Commons-API zur
+   Dateiauflösung. Geladene Originalgrafiken bleiben proportional. Die
+   Ursprungsgrafiken/Lizenzangaben sind jeweils auf Commons nachvollziehbar.
+   In dieser Lieferung sind keine aus Commons heruntergeladenen Flaggenbytes
+   enthalten. Die App lädt sie beim ersten Online-Aufruf und speichert Erfolge.
+
+5. Technische Referenz
+   https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API
+   Vollbild wird durch bewusste Benutzeraktion angefordert, nicht automatisch
+   beim Laden. Der Browser darf die Anfrage ablehnen; die App zeigt dann einen
+   Hinweis und bleibt im normalen Fenster benutzbar.
+
+6. Eigene Ausarbeitung
+   Layout, UI-Icons, Schweizer App-Icon, Navigation, Bedienlogik und
+   Fehlerbehandlung der Tablet-Edition wurden für diese Ausgabe erstellt.
+   Systemschriftarten: keine Font-Dateien und keine Google-Fonts-Abhängigkeit.

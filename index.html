@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#c73739">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjggMTI4Ij48cmVjdCB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgcng9IjMyIiBmaWxsPSIjYzczNzM5Ii8+PHBhdGggZD0iTTQ5IDIzaDMwdjI2aDI2djMwSDc5djI2SDQ5Vjc5SDIzVjQ5aDI2eiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=">
+<title>SwizQuiz | Tablet Edition</title>
+<style>
+:root{--ink:#21313c;--muted:#69757a;--bg:#f5f2ec;--surface:#fffdfa;--line:#e4e1d8;--red:#c73739;--red-dark:#a5272c;--red-soft:#fae9e4;--green:#247a5c;--green-bg:#e0f3e9;--gold:#e7ad3a;--navy:#233c4a;--shadow:0 10px 28px #2732390c;--radius:23px;--app-h:100dvh;color-scheme:light;font-family:"Trebuchet MS","Avenir Next",system-ui,sans-serif}
+:root[data-theme=dark]{--ink:#f5f0e9;--muted:#b5bfbd;--bg:#192b32;--surface:#253840;--line:#3b4d53;--red-soft:#4f3031;--green-bg:#254c40;--shadow:0 10px 28px #0002;color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink)}
+button,input,select{font:inherit;color:inherit}button{cursor:pointer;touch-action:manipulation}button:disabled{cursor:default;opacity:.5}button{border:0}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #e4a83b;outline-offset:3px}h1,h2,h3,p{margin:0}input,select{max-width:100%}a{color:var(--red)}
+button,summary{user-select:none}svg{display:block}.icon{width:23px;height:23px;flex:0 0 auto;pointer-events:none}.sq-app{height:var(--app-h);max-height:var(--app-h);display:flex;flex-direction:column;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);overflow:hidden}
+.top{height:62px;flex:0 0 62px;display:flex;align-items:center;gap:14px;padding:8px 19px;border-bottom:1px solid var(--line);background:var(--surface)}
+.brand{display:flex;align-items:center;gap:10px;background:transparent;padding:0;text-align:left}.brand-mark{height:40px;width:40px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#e85951,#bf2734);box-shadow:0 4px 0 #97212b;color:white}.brand-mark .icon{width:27px;height:27px}.brand-name{font-size:24px;font-weight:900;letter-spacing:-.055em;line-height:1}.brand-note{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:3px}.top-right{margin-left:auto;display:flex;gap:8px;align-items:center}.top-button{min-height:44px;border-radius:14px;background:var(--bg);display:flex;align-items:center;justify-content:center;gap:8px;padding:0 13px;font-weight:800;font-size:14px;border:1px solid var(--line)}.top-button.icon-only{width:44px;padding:0}.profile-avatar{width:27px;height:27px;border-radius:9px;background:var(--red-soft);color:var(--red);display:grid;place-items:center;font-size:14px;font-weight:900}.points .icon{color:var(--gold)}.full-button{background:var(--navy);border-color:transparent;color:#fff}.profile-name{max-width:160px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+main{flex:1 1 0;min-height:0;min-width:0;width:100%;max-width:1640px;margin:0 auto;padding:13px 18px 17px;overflow:hidden}.screen{height:100%;min-height:0;display:flex;flex-direction:column;gap:10px}.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);min-height:0;min-width:0}.grow{flex:1}.muted{color:var(--muted)}.eyebrow{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.14em;color:var(--muted)}.btn{min-height:48px;padding:0 17px;border-radius:14px;font-weight:800;background:var(--surface);border:1px solid var(--line);display:inline-flex;gap:8px;align-items:center;justify-content:center}.btn.primary{color:#fff;background:var(--red);border-color:var(--red-dark);box-shadow:0 4px 0 var(--red-dark)}.btn:active:not(:disabled){transform:translateY(2px)}.btn.danger{color:var(--red)}.btn.soft{background:var(--red-soft);border-color:transparent;color:var(--red)}.btn.small{min-height:43px;padding:0 13px;font-size:13px}.routebar{height:44px;flex:0 0 44px;display:flex;align-items:center;gap:13px;min-width:0}.routebar h1{font-size:25px;letter-spacing:-.045em;line-height:1}.routebar .meta{margin-left:auto;display:flex;gap:12px;align-items:center;font-size:14px;font-weight:800;white-space:nowrap}.routebar .tag{border-radius:10px;background:var(--surface);padding:8px 12px;border:1px solid var(--line)}
+/* One home screen, eight original modes. */
+.home{display:grid;grid-template-rows:94px minmax(0,1fr) 46px;gap:13px}.welcome{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;align-items:center;padding:15px 21px;border-radius:22px;background:var(--navy);color:#fff;position:relative;overflow:hidden}.welcome h1{font-size:clamp(25px,2.65vw,39px);letter-spacing:-.045em}.welcome p{font-size:14px;color:#d4dfe1;margin-top:5px}.welcome .eyebrow{color:#b8ccd1;font-size:10px;margin-bottom:5px}.home-progress{display:grid;grid-template-columns:46px minmax(0,1fr) auto;align-items:center;gap:12px;padding:10px 14px;border:1px solid #ffffff2b;background:#ffffff0a;border-radius:16px;text-align:left;color:inherit}.level-symbol{color:#eac270;display:grid;place-items:center}.level-symbol .icon{width:36px;height:36px}.home-progress strong{font-size:17px}.home-progress small{color:#c6d6da;font-size:11px}.mini-progress{height:5px;border-radius:6px;background:#ffffff25;overflow:hidden;margin:7px 0 4px}.mini-progress span{display:block;height:100%;background:#ecc06a;border-radius:6px}.mode-grid{min-height:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:16px 13px;padding-bottom:6px}.mode-card{--tone:#c73739;--tint:#fae6df;--foot:#d2b0a4;min-width:0;min-height:0;border-radius:22px;border:1px solid var(--line);background:var(--surface);box-shadow:0 6px 0 var(--foot),0 12px 18px #22334408;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;position:relative;padding:10px 10px 12px;transition:transform .13s,box-shadow .13s;text-align:center;color:var(--ink);overflow:hidden}.mode-card:active{transform:translateY(4px);box-shadow:0 2px 0 var(--foot),0 5px 9px #22334408}.mode-card .badge{position:absolute;right:10px;top:9px;font-size:9px;font-weight:900;color:var(--muted);letter-spacing:.05em}.mode-art{flex:1 1 0;min-height:0;width:100%;display:grid;place-items:center;position:relative}.mode-art:before{content:"";position:absolute;width:83px;height:76px;border-radius:28px;transform:rotate(-9deg);background:var(--tint)}.mode-art svg{height:min(100%,74px);width:auto;max-width:84px;filter:drop-shadow(0 5px 3px #19304015);position:relative;color:var(--tone);z-index:1}.mode-card h2{font-size:clamp(16px,1.7vw,23px);font-weight:900;letter-spacing:-.035em;line-height:1.1;position:relative;margin-top:5px;overflow-wrap:normal}.mode-card p{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.15}.home-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}.home-bottom .btn{background:var(--surface)}.asset-status{font-size:11px;color:var(--muted);display:flex;gap:6px;align-items:center;max-width:46%;text-align:right}.status-dot{width:7px;height:7px;background:#dda83b;border-radius:50%;flex:0 0 auto}.status-dot.ready{background:var(--green)}.status-dot.error{background:var(--red)}
+/* Quiz: never squash the flag or the answer targets. */
+.quiz-layout{flex:1 1 0;min-height:0;display:grid;grid-template-columns:minmax(230px,.8fr) minmax(0,1.2fr);gap:13px}.quiz-layout.multi{grid-template-columns:minmax(160px,.44fr) minmax(0,1.56fr)}.media-panel{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:14px;overflow:hidden;background:linear-gradient(145deg,var(--surface),var(--bg))}.media-panel .media-hint{font-size:11px;font-weight:900;letter-spacing:.13em;color:var(--muted);text-align:center;text-transform:uppercase;flex:0 0 auto}.media-panel .context-name{font-size:clamp(21px,2.35vw,32px);font-weight:900;text-align:center;line-height:1.08}.flag-frame{flex:1 1 0;min-height:0;min-width:0;width:100%;display:flex;align-items:center;justify-content:center;padding:10px}.flag-img{display:block;object-fit:contain;max-width:100%;max-height:100%;width:100%;height:100%;filter:drop-shadow(0 7px 6px #1c293523);border-radius:2px}.flag-frame.hero-flag{max-width:380px;max-height:390px}.flag-small{width:34px;height:34px;display:inline-grid;place-items:center;flex:0 0 auto;vertical-align:middle}.flag-small img{width:100%;height:100%;object-fit:contain;border:1px solid #bbb6;border-radius:3px}.flag-unavailable{width:100%;height:100%;min-height:26px;display:grid;place-items:center;background:var(--bg);border:1px dashed var(--line);border-radius:10px;color:var(--muted);font-size:11px;text-align:center;line-height:1.4}.outline-figure{width:100%;height:100%;min-height:0;display:block;flex:1 1 0}.outline-figure path{fill:#cc3d3d12;stroke:var(--red);stroke-width:2.7;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.question-panel{padding:21px;display:flex;flex-direction:column;gap:15px}.question-panel h2{font-size:clamp(24px,2.5vw,36px);line-height:1.12;letter-spacing:-.04em;flex:0 0 auto}.question-panel .q-note{font-size:12px;color:var(--muted);min-height:15px}.option-grid{flex:1 1 0;min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:11px}.option{border:2px solid var(--line);border-radius:17px;min-height:48px;padding:12px;text-align:center;background:var(--bg);font-size:clamp(19px,1.85vw,26px);font-weight:800;line-height:1.15;overflow-wrap:break-word;display:flex;align-items:center;justify-content:center;position:relative;color:var(--ink);box-shadow:0 4px 0 #263b4510}.option:not(:disabled):active{transform:translateY(2px)}.option.chosen{border-color:var(--red);background:var(--red-soft)}.option.correct{border-color:var(--green);background:var(--green-bg);color:var(--green)}.option.wrong{border-color:var(--red);background:var(--red-soft);color:var(--red)}.option:disabled{opacity:1}.option .answer-tick{position:absolute;right:7px;top:5px;font-size:13px}.option-grid.many{gap:7px;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:minmax(48px,1fr);grid-template-rows:none}.option-grid.many .option{font-size:clamp(15px,1.4vw,19px);padding:5px 9px;box-shadow:none;min-height:48px;border-radius:12px}.option-grid.five{grid-template-rows:repeat(3,minmax(0,1fr))}.quiz-layout.multi .question-panel{padding:16px;gap:9px}.quiz-layout.multi .question-panel h2{font-size:clamp(22px,2.2vw,31px)}.feedback-bar{min-height:54px;flex:0 0 54px;display:flex;align-items:center;gap:12px}.feedback{flex:1;font-size:15px;font-weight:700;line-height:1.2;color:var(--muted)}.feedback.good{color:var(--green)}.feedback.bad{color:var(--red)}.time-chip{font-variant-numeric:tabular-nums;color:var(--red);background:var(--red-soft);padding:8px 12px;border-radius:11px}.time-chip.urgent{outline:2px solid var(--red)}.quiz-progress{height:4px;flex:0 0 4px;border-radius:4px;background:var(--line);overflow:hidden}.quiz-progress>span{height:100%;background:var(--red);display:block;transition:width .2s}
+/* Categories / learning cards. */
+.category-grid{flex:1 1 0;min-height:0;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(2,1fr);gap:14px}.category-card{padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;border:1px solid var(--line);border-radius:21px;background:var(--surface);box-shadow:0 5px 0 #d7d2c5;min-width:0}.category-card .icon{width:42px;height:42px;color:var(--red)}.category-card strong{font-size:18px;line-height:1.1}.category-card small{font-size:11px;color:var(--muted)}.learn-layout{flex:1 1 0;min-height:0;display:grid;grid-template-columns:minmax(230px,.85fr) minmax(0,1.15fr);gap:14px}.learn-visual{display:grid;grid-template-rows:minmax(0,1fr) 34%;min-height:0;gap:14px;padding:16px}.learn-visual .flag-frame{max-height:none;max-width:none}.learn-details{padding:21px;display:flex;flex-direction:column;gap:14px}.learn-details h2{font-size:clamp(25px,3vw,42px);letter-spacing:-.045em;line-height:1.04}.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px 16px}.data-item{min-width:0;padding-bottom:9px;border-bottom:1px solid var(--line)}.data-item dt{font-size:11px;color:var(--muted);font-weight:700;margin-bottom:4px}.data-item dd{margin:0;font-size:clamp(16px,1.8vw,23px);line-height:1.15;font-weight:800}.data-item.wide{grid-column:1/-1}.neighbours{display:flex;gap:5px;flex-wrap:wrap}.neighbour-chip{font-size:12px;background:var(--bg);padding:5px 8px;border-radius:8px;min-height:25px}.learn-footer{margin-top:auto;display:flex;gap:8px;align-items:center;justify-content:space-between}.select-canton{min-height:44px;max-width:220px;border:1px solid var(--line);border-radius:11px;background:var(--surface);padding:0 10px;font-size:15px;font-weight:700}
+/* Map games and exploration share a measurable stage. */
+.map-layout{flex:1 1 0;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 275px;gap:13px}.map-panel{min-width:0;min-height:0;display:flex;flex-direction:column;position:relative;overflow:hidden}.map-stage{position:relative;flex:1 1 0;min-height:0;min-width:0;background:#e8f0ef;overflow:hidden;border-radius:22px}.map-svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none;user-select:none;display:block;cursor:grab}.map-svg path.sq-canton{cursor:pointer;stroke-linejoin:round;transition:fill .18s;outline:none}.sq-canton:focus-visible{stroke:#14252f;stroke-width:2.2}.map-svg .sq-neighbour{fill:#e1e9e2;stroke:#b4c4bc;stroke-width:.35}.map-svg .sq-lake{fill:#a8d4df;pointer-events:none}.map-svg .sq-label{font:700 6px Arial,sans-serif;fill:#607875;text-anchor:middle;pointer-events:none}.map-controls{display:flex;gap:7px;position:absolute;bottom:12px;left:12px;z-index:2}.map-controls button{width:48px;height:48px;background:var(--surface);border:1px solid var(--line);border-radius:13px;box-shadow:0 4px 12px #213c4812;display:grid;place-items:center;font-size:24px;font-weight:800}.map-credit{position:absolute;bottom:8px;right:12px;font-size:9px;color:#617a75;max-width:60%;text-align:right;pointer-events:none}.map-aside{display:flex;flex-direction:column;gap:14px;padding:17px}.map-aside h2{font-size:26px;line-height:1.1;letter-spacing:-.04em}.map-aside .flag-frame{flex:0 0 105px;max-height:105px}.map-aside .map-info{display:flex;flex-direction:column;gap:10px}.map-aside .map-info div{font-size:14px;color:var(--muted);line-height:1.3}.map-aside .map-info b{display:block;color:var(--ink);font-size:19px}.map-aside .btn{margin-top:auto}.map-aside .map-help{font-size:12px;line-height:1.5;color:var(--muted)}.map-aside .mini-cats{display:grid;grid-template-columns:1fr 1fr;gap:5px}.mini-cats div{font-size:11px;padding:6px 5px;border-radius:8px;background:var(--bg)}.mini-cats b{display:block;font-size:11px}
+/* Memory: square boards are sized to BOTH available dimensions. */
+.memory-panel{flex:1 1 0;min-height:0;padding:13px;display:flex}.memory-stage{flex:1 1 0;min-width:0;min-height:0;display:grid;place-items:center;contain:size layout}.memory-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));gap:9px}.memory-card{position:relative;min-width:0;min-height:0;border:0;background:transparent;padding:0;perspective:800px}.memory-face{position:absolute;inset:0;border-radius:14px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;transition:transform .28s;overflow:hidden;padding:9px}.memory-front{color:#fff;background:linear-gradient(145deg,#d54c47,#b12b36);box-shadow:0 4px 0 #871f2b}.memory-front .icon{width:33%;height:33%;opacity:.9}.memory-back{transform:rotateY(180deg);background:var(--surface);border:2px solid var(--line);font-size:clamp(12px,1.6vw,20px);font-weight:900;text-align:center;line-height:1.1}.memory-card.open .memory-front,.memory-card.matched .memory-front{transform:rotateY(-180deg)}.memory-card.open .memory-back,.memory-card.matched .memory-back{transform:rotateY(0)}.memory-card.matched .memory-back{border-color:var(--green);background:var(--green-bg)}.memory-card.matched:disabled{opacity:1}.memory-back .flag-img{filter:none}.memory-caption{font-size:13px;color:var(--muted)}
+/* Progress remains per canton/category, all 858 EP. */
+.stats-summary{height:80px;flex:0 0 80px;display:grid;grid-template-columns:1.15fr 1fr 1fr 1fr;gap:11px}.stat-card{padding:12px 16px;display:flex;flex-direction:column;justify-content:center;gap:4px}.stat-card strong{font-size:26px;line-height:1}.stat-card small{font-size:11px;color:var(--muted)}.progress-layout{flex:1 1 0;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:12px}.progress-side{padding:16px;display:flex;flex-direction:column;gap:10px;overflow:hidden}.progress-side h3{font-size:22px}.progress-side label{font-size:12px;font-weight:800}.progress-side select{min-height:46px;font-weight:800;padding:0 10px;border-radius:12px;border:1px solid var(--line);background:var(--surface)}.legend{display:grid;grid-template-columns:1fr 1fr;gap:7px;font-size:11px;color:var(--muted)}.legend span{display:flex;align-items:center;gap:6px}.legend i{height:9px;width:9px;display:block;border-radius:50%}.mastery{display:inline-flex;gap:3px;align-items:center}.mastery i{height:7px;width:7px;border-radius:50%;background:#c1c8c4}.mastery i.on{background:var(--green)}
+/* Supporting pages, also without scrolling. */
+.profiles{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}.profile-card{padding:22px;display:flex;align-items:center;flex-direction:column;gap:14px;justify-content:center}.profile-card.selected{border:2px solid var(--red)}.profile-big{height:70px;width:70px;display:grid;place-items:center;border-radius:23px;font-size:31px;font-weight:900;color:var(--red);background:var(--red-soft)}.profile-card input{height:50px;border:1px solid var(--line);border-radius:12px;padding:0 12px;background:var(--bg);width:100%;font-weight:800;text-align:center;min-width:0}.profile-card .btn{width:100%}.profile-card .profile-info{font-size:13px;text-align:center;color:var(--muted)}.settings-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:13px;flex:1;min-height:0}.setting-card{padding:18px;display:flex;flex-direction:column;gap:10px;min-height:0}.setting-card h2{font-size:20px;letter-spacing:-.025em}.setting-card p{font-size:13px;color:var(--muted);line-height:1.45}.setting-card .actions{margin-top:auto;display:flex;gap:7px;align-items:center;flex-wrap:wrap}.setting-card label.switch{display:flex;align-items:center;gap:11px;font-size:14px;font-weight:700}.setting-card input[type=checkbox]{width:22px;height:22px;accent-color:var(--red)}.file-label input{display:none}.file-label{cursor:pointer}.segment{display:flex;gap:6px}.segment button{padding:9px 11px;background:var(--bg);border:1px solid var(--line);border-radius:10px;font-size:12px;font-weight:800}.segment .on{background:var(--navy);color:#fff;border-color:var(--navy)}.result-panel{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);overflow:hidden}.result-art{display:flex;align-items:center;justify-content:center;flex-direction:column;background:var(--red-soft);gap:18px;padding:25px}.result-art svg{width:120px;height:120px;color:var(--red);filter:drop-shadow(0 7px 0 #af302018)}.result-score{font-size:clamp(50px,7vw,105px);font-weight:900;letter-spacing:-.06em;color:var(--red);line-height:1}.result-info{display:flex;flex-direction:column;justify-content:center;padding:32px;gap:15px}.result-info h2{font-size:36px;line-height:1;letter-spacing:-.04em}.result-info p{line-height:1.55;color:var(--muted)}.result-info .actions{display:flex;gap:8px;flex-wrap:wrap}.result-detail{font-size:16px;font-weight:700}.empty-panel{flex:1;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:25px;gap:16px;text-align:center}.empty-panel h2{font-size:30px}.empty-panel p{max-width:580px;color:var(--muted);line-height:1.5}.loading-illustration .icon{width:60px;height:60px;color:var(--red)}.asset-progress{width:240px;height:7px;background:var(--line);border-radius:6px;overflow:hidden}.asset-progress span{display:block;height:100%;background:var(--red)}
+/* Dialogs are short pages, never endless sheets. */
+.dialog-layer{position:fixed;inset:0;z-index:50;background:#172d3f88;display:none;place-items:center;padding:14px}.dialog-layer.open{display:grid}.dialog{width:min(750px,95vw);max-height:calc(var(--app-h) - 28px);min-height:0;border:1px solid var(--line);border-radius:25px;background:var(--surface);box-shadow:0 22px 70px #0003;display:flex;flex-direction:column;overflow:hidden}.dialog-header{display:flex;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--line);min-height:65px}.dialog-header h2{font-size:23px;letter-spacing:-.025em}.dialog-header button{margin-left:auto;min-width:44px;height:44px;border-radius:12px;background:var(--bg);display:grid;place-items:center}.dialog-body{padding:18px 20px;min-height:0;display:flex;flex-direction:column;gap:13px;overflow:hidden}.dialog-body p{font-size:14px;line-height:1.45;color:var(--muted)}.filter-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.filter-option{min-height:88px;padding:14px;background:var(--bg);border:2px solid var(--line);border-radius:15px;text-align:left;display:flex;flex-direction:column;gap:6px}.filter-option strong{font-size:18px}.filter-option small{font-size:12px;color:var(--muted)}.filter-option.on{border-color:var(--red);background:var(--red-soft)}.canton-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.canton-row{padding:7px 10px;border-radius:12px;display:flex;align-items:center;gap:9px;border:1px solid var(--line);background:var(--bg);font-size:13px;font-weight:800;min-height:48px;min-width:0}.canton-row>button:first-child{display:flex;gap:9px;align-items:center;text-align:left;background:transparent;flex:1;min-width:0;padding:0}.canton-row .remove{margin-left:auto;width:38px;height:38px;border-radius:9px;background:var(--surface);display:grid;place-items:center;flex:0 0 auto}.page-controls{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:auto;font-size:12px;font-weight:700}.page-controls button{min-width:46px;min-height:44px;border:1px solid var(--line);background:var(--bg);border-radius:11px;display:grid;place-items:center}.sources-body{font-size:12px;line-height:1.4}.sources-body h3{font-size:16px}.sources-body p{font-size:12px}.sources-body .legal{padding:9px 12px;border-radius:12px;background:var(--bg)}
+.toast{position:fixed;z-index:70;left:50%;bottom:22px;transform:translate(-50%,15px);background:var(--navy);color:#fff;box-shadow:0 8px 24px #0003;border-radius:13px;padding:12px 18px;font-size:14px;font-weight:800;max-width:85vw;text-align:center;opacity:0;pointer-events:none;transition:opacity .16s,transform .16s}.toast.show{opacity:1;transform:translate(-50%,0)}.rotate-screen{display:none;position:fixed;inset:0;background:var(--navy);color:#fff;z-index:100;align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:16px;padding:26px}.rotate-screen .icon{width:72px;height:72px;color:#f1c57d}.rotate-screen h2{font-size:28px}.rotate-screen p{max-width:320px;line-height:1.5;color:#d3dedf}.rotate-screen .btn{color:var(--ink)}
+@media(orientation:portrait){.rotate-screen{display:flex}.sq-app{visibility:hidden}}
+@media(min-width:1400px) and (min-height:800px){.home{grid-template-rows:120px minmax(0,1fr) 50px;gap:18px}.mode-card{padding-bottom:22px}.mode-art svg{max-width:115px;height:min(100%,100px)}.mode-art:before{width:115px;height:105px}.mode-card p{font-size:14px}.category-card strong{font-size:24px}}
+@media(max-height:680px){.top{height:56px;flex-basis:56px;padding:5px 14px}.brand-mark{width:36px;height:36px;border-radius:11px}.brand-name{font-size:22px}.brand-note{font-size:9px}.top-button{min-height:44px}.top-right{gap:6px}main{padding:9px 12px 12px}.home{grid-template-rows:80px minmax(0,1fr) 44px;gap:10px}.welcome{padding:10px 16px}.welcome h1{font-size:27px}.welcome p{font-size:12px}.welcome .eyebrow{font-size:9px}.home-progress{padding:7px 11px;gap:8px;grid-template-columns:33px minmax(0,1fr) auto}.home-progress strong{font-size:15px}.level-symbol .icon{width:30px;height:30px}.mini-progress{margin:5px 0 3px}.mode-card{border-radius:18px;padding:7px 9px 11px}.mode-card .badge{font-size:8px}.mode-art:before{width:70px;height:62px;border-radius:22px}.mode-art svg{height:min(100%,62px);max-width:68px}.mode-card h2{font-size:17px}.mode-card p{font-size:10px}.mode-grid{gap:13px 10px;padding-bottom:6px}.routebar h1{font-size:23px}.screen{gap:8px}.question-panel{padding:15px;gap:10px}.question-panel h2{font-size:26px}.option-grid{gap:8px}.option{font-size:20px;padding:8px}.quiz-layout{gap:10px}.media-panel{padding:12px;gap:8px}.feedback-bar{flex-basis:50px;min-height:50px}.feedback{font-size:13px}.category-card{gap:8px}.category-card strong{font-size:16px}.category-card .icon{height:35px;width:35px}.category-grid{gap:11px}.learn-details{padding:15px;gap:9px}.learn-details h2{font-size:27px}.data-grid{gap:8px 12px}.data-item{padding-bottom:6px}.data-item dd{font-size:17px}.data-item dt{font-size:10px}.neighbour-chip{font-size:11px;padding:4px 6px}.map-layout{grid-template-columns:minmax(0,1fr) 240px}.map-aside{padding:13px;gap:10px}.map-aside h2{font-size:23px}.map-aside .map-info b{font-size:17px}.map-aside .flag-frame{flex-basis:78px;max-height:78px}.stats-summary{height:66px;flex-basis:66px}.stat-card{padding:8px 12px}.stat-card strong{font-size:21px}.progress-layout{grid-template-columns:minmax(0,1fr) 250px}.progress-side{padding:11px;gap:8px}.progress-side h3{font-size:19px}.setting-card{padding:13px;gap:7px}.setting-card p{font-size:12px}.setting-card h2{font-size:18px}.setting-card .btn{min-height:44px;padding:0 11px;font-size:13px}.settings-grid{gap:10px}.dialog-header{padding:10px 16px;min-height:58px}.dialog-body{padding:12px 16px;gap:10px}.profile-card{padding:17px;gap:11px}.profile-big{width:56px;height:56px;font-size:27px}.result-info{padding:24px;gap:12px}.result-info h2{font-size:30px}.result-info p{font-size:14px}}
+@media(max-width:1040px){.top{gap:10px}.top-button{font-size:12px;padding:0 10px;gap:6px}.profile-name{max-width:110px}.brand-name{font-size:22px}.welcome h1{font-size:25px}.mode-card h2{font-size:16px}.category-card strong{font-size:16px}.question-panel h2{font-size:25px}.quiz-layout{grid-template-columns:minmax(200px,.8fr) minmax(0,1.2fr)}.quiz-layout.multi{grid-template-columns:minmax(145px,.38fr) minmax(0,1.62fr)}.quiz-layout.multi .question-panel h2{font-size:23px}.quiz-layout.multi .media-panel{padding:9px}.option-grid.many .option{font-size:15px;padding:4px 6px}.learn-layout{grid-template-columns:minmax(220px,.75fr) minmax(0,1.25fr)}.map-aside .map-info div{font-size:12px}.map-aside .map-info b{font-size:16px}.brand-note{letter-spacing:.075em}.asset-status{font-size:10px}.home-progress small{font-size:10px}.option{font-size:19px}.map-credit{font-size:8px}}
+@media(max-height:550px){.home{grid-template-rows:68px minmax(0,1fr) 44px}.welcome .eyebrow{display:none}.welcome p{font-size:11px}.welcome h1{font-size:23px}.home-progress{padding:5px 10px}.home-progress .mini-progress{height:4px;margin:4px 0 3px}.mode-card{padding-bottom:9px}.mode-card p{margin-top:2px;font-size:9px}.mode-card h2{font-size:15px}.mode-art svg{height:min(100%,48px);max-width:56px}.mode-art:before{height:48px;width:54px;border-radius:17px}.mode-grid{gap:12px 10px}.mode-card .badge{font-size:8px}.media-panel .media-hint{font-size:10px}.quiz-layout.multi .question-panel{padding:10px;gap:7px}.option-grid.many{gap:5px}.option-grid.many .option{min-height:48px}.routebar{height:42px;flex-basis:42px}.routebar h1{font-size:21px}.question-panel h2{font-size:23px}.routebar .meta{gap:7px;font-size:12px}.data-item dd{font-size:16px}.learn-details{gap:7px}.learn-visual{padding:12px;gap:5px}.learn-details h2{font-size:25px}.map-aside{gap:8px}.map-aside .map-info{gap:6px}.map-aside .map-help{font-size:11px}.progress-side .legend{font-size:10px;gap:5px}.progress-side{gap:6px}.setting-card{padding:11px;gap:7px}.setting-card .actions{gap:5px}.setting-card .btn{min-height:43px;font-size:12px}.setting-card p{font-size:11px}.setting-card label.switch{font-size:12px}.result-art svg{width:85px;height:85px}.result-info h2{font-size:27px}.profile-card .btn{font-size:14px}.profile-big{height:45px;width:45px;border-radius:15px}.profile-card{gap:8px}.memory-board{gap:7px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* Final containment refinements: compact headers, all choices remain touchable. */
+.brand-name,.brand-note,.mini-progress{display:block}
+.welcome h1{line-height:1.04}.welcome p{line-height:1.2;margin-top:4px}.welcome .eyebrow{line-height:1.05;margin-bottom:3px}
+.routebar .meta>span{display:flex;align-items:center;gap:5px}
+dl.data-grid{margin:0}
+.option-grid.many{grid-template-rows:repeat(var(--rows-wide),minmax(0,1fr))!important}
+.memory-back>.flag-frame{height:100%;padding:4px}
+@media(max-height:620px){.option-grid.many{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(var(--rows-short),minmax(0,1fr))!important}.quiz-layout.multi .question-panel{gap:7px;padding:11px}.quiz-layout.multi .question-panel h2{font-size:23px}}
+@media(max-height:550px){.quiz-layout.multi.dense{grid-template-columns:minmax(0,1fr)}.quiz-layout.multi.dense .media-panel{display:none}.quiz-layout.multi.dense .question-panel{gap:6px;padding:10px 13px}.quiz-layout.multi.dense .question-panel .eyebrow{display:none}.option-grid.many .option{font-size:16px}}
+
+
+.welcome{grid-template-rows:minmax(0,1fr)}.welcome>div{min-width:0}.welcome h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.home-progress{height:100%;min-height:0}.home-progress>span:nth-child(2){display:flex;flex-direction:column;gap:3px;min-width:0;line-height:1.1}.home-progress strong{display:block;line-height:1.05}.home-progress small{display:block;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.home-progress .mini-progress{margin:0;flex:0 0 5px;width:100%}
+#progressInfo{flex:1 1 0;min-height:0;display:flex;flex-direction:column;gap:7px}#progressInfo h3{margin:0!important;flex:0 0 auto;line-height:1.05}#progressInfo .mini-cats{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(4,minmax(0,1fr));gap:4px!important}#progressInfo .mini-cats>div{min-height:0;min-width:0;padding:4px!important;display:flex;flex-direction:column;justify-content:space-between;font-size:10px!important;line-height:1.1}#progressInfo .mini-cats .mastery{flex:0 0 7px}
+@media(max-height:550px){.home-progress{padding:4px 9px}.home-progress strong{font-size:14px}.home-progress small{font-size:9px}.home-progress .mini-progress{flex-basis:4px}.progress-side{padding:10px;gap:5px}.progress-side label{font-size:11px;line-height:1}.progress-side select{min-height:44px;font-size:12px}.progress-side .legend{line-height:1.1}.progress-side h3{font-size:18px}#progressInfo{gap:5px}#progressInfo .mini-cats>div>span:first-child{margin-bottom:1px!important}}
+
+</style>
+</head>
+<body>
+<div id="app" class="sq-app">
+<header class="top" id="top"></header>
+<main id="main" aria-live="off"></main>
+</div>
+<div id="dialogLayer" class="dialog-layer" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div class="rotate-screen" id="rotateScreen"></div>
+<script id="sq-embedded" type="application/json">{"flags":{},"geo":null}</script>
+<script>
+(() => {
+'use strict';
+const VERSION='2.0.0';
+const ORIGINAL_KEY='swizquizV1';
+const PREFS_KEY='swizquizTabletPrefsV2';
+const SHELL='<!doctype html>\n'+document.documentElement.outerHTML;
+const R=[["ZH", "Z\u00fcrich", "Z\u00fcrich", "d", 1729, 1565, "Schnebelhorn (1\u2019292 m)", "Limmat", "AG ZG SZ SG TG SH", "DE"], ["BE", "Bern", "Bern", "df", 5960, 1060, "Finsteraarhorn (4\u2019274 m)", "Aare", "JU SO AG LU OW UR VS VD FR NE", ""], ["LU", "Luzern", "Luzern", "d", 1494, 425, "Brienzer Rothorn (2\u2019350 m)", "Reuss", "AG BE NW OW SZ ZG SO", ""], ["UR", "Uri", "Altdorf", "d", 1077, 37, "Dammastock (3\u2019630 m)", "Reuss", "TI VS BE OW NW SZ GL GR", ""], ["SZ", "Schwyz", "Schwyz", "d", 908, 166, "B\u00f6s Fulen (2\u2019802 m)", "Muota", "ZH ZG LU NW UR GL SG", ""], ["OW", "Obwalden", "Sarnen", "d", 491, 39, "Titlis (3\u2019238 m)", "Sarner Aa", "BE LU NW UR", ""], ["NW", "Nidwalden", "Stans", "d", 276, 45, "Schlossberg (3\u2019133 m)", "Engelberger Aa", "LU OW UR SZ", ""], ["GL", "Glarus", "Glarus", "d", 685, 41, "T\u00f6di (3\u2019614 m)", "Linth", "UR GR SG SZ", ""], ["ZG", "Zug", "Zug", "d", 239, 133, "Wildspitz (1\u2019580 m)", "Lorze", "ZH SZ LU AG", ""], ["FR", "Freiburg", "Freiburg", "fd", 1671, 340, "Vanil Noir (2\u2019389 m)", "Saane", "BE VD NE", ""], ["SO", "Solothurn", "Solothurn", "d", 790, 285, "Hasenmatt (1\u2019445 m)", "Aare", "BE JU BL AG", ""], ["BS", "Basel-Stadt", "Basel", "d", 37, 200, "Chrischona (522 m)", "Rhein", "BL", "DE FR"], ["BL", "Basel-Landschaft", "Liestal", "d", 518, 295, "Hinteri Egg (1\u2019169 m)", "Birs", "BS SO AG JU BE", "FR"], ["SH", "Schaffhausen", "Schaffhausen", "d", 298, 85, "Hoher Randen (912 m)", "Rhein", "ZH TG", "DE"], ["AR", "Appenzell Ausserrhoden", "Herisau", "d", 243, 56, "S\u00e4ntis (2\u2019502 m)", "Sitter", "SG AI", ""], ["AI", "Appenzell Innerrhoden", "Appenzell", "d", 173, 17, "S\u00e4ntis (2\u2019502 m)", "Sitter", "SG AR", ""], ["SG", "St. Gallen", "St. Gallen", "d", 2025, 530, "Ringelspitz (3\u2019247 m)", "Rhein", "TG ZH SZ GL GR AR AI", "AT LI"], ["GR", "Graub\u00fcnden", "Chur", "dri", 7105, 205, "Piz Bernina (4\u2019049 m)", "Rhein", "SG GL UR TI", "IT AT LI"], ["AG", "Aargau", "Aarau", "d", 1404, 720, "Geissflue (961 m)", "Aare", "SO BL BE LU ZG ZH", "DE"], ["TG", "Thurgau", "Frauenfeld", "d", 991, 300, "H\u00f6rnli (1\u2019133 m)", "Thur", "SH ZH SG", "DE"], ["TI", "Tessin", "Bellinzona", "i", 2812, 355, "Rheinwaldhorn (3\u2019402 m)", "Ticino", "UR GR VS", "IT"], ["VD", "Waadt", "Lausanne", "f", 3212, 830, "Les Diablerets (3\u2019210 m)", "Rhone", "GE VS BE FR NE", "FR"], ["VS", "Wallis", "Sitten", "fd", 5224, 355, "Dufourspitze (4\u2019634 m)", "Rhone", "VD BE UR TI", "FR IT"], ["NE", "Neuenburg", "Neuenburg", "f", 803, 180, "Le Soliat (1\u2019465 m)", "Areuse", "VD FR BE JU", "FR"], ["GE", "Genf", "Genf", "f", 282, 510, "Les Arales (516 m)", "Rhone", "VD", "FR"], ["JU", "Jura", "Delsberg", "f", 839, 74, "Mont Raimeux (1\u2019302 m)", "Doubs", "NE BE SO BL", "FR"]];
+const LN={d:'Deutsch',f:'Franz\u00f6sisch',i:'Italienisch',r:'R\u00e4toromanisch'};
+const CN={DE:'Deutschland',FR:'Frankreich',IT:'Italien',AT:'\u00d6sterreich',LI:'Liechtenstein'};
+// Original source columns and values, unchanged.
+const C=R.map((r,id)=>({id,i:r[0],n:r[1],c:r[2],l:[...r[3]].map(x=>LN[x]),a:r[4],p:r[5],m:r[6],r:r[7],nb:r[8].split(' ').filter(Boolean),nc:r[9].split(' ').filter(Boolean)}));
+const BY=Object.fromEntries(C.map(d=>[d.i,d]));
+const CATS=[['neighbors','Nachbarn','compass'],['lang','Sprachen','speech'],['area','Fl\u00e4che','ruler'],['population','Einwohner','people'],['outline','Umriss','outline'],['flag','Flagge','flag'],['mountain','H\u00f6chster Berg','mountain'],['capital','Hauptstadt','city'],['map','Auf Karte finden','pin'],['river','Gr\u00f6sster Fluss','waves'],['memory','Flaggen-Memory','cards']];
+const QC=[...CATS.filter(c=>c[0]!=='map'&&c[0]!=='memory'),['mixed','Gemischt','shuffle']];
+const CATKEYS=CATS.map(c=>c[0]),MX=3,CMAX=CATS.length*MX,MAXEP=C.length*CMAX;
+const LV=[['Tourist','case',0],['Wanderer','compass',60],['\u00c4lpler','mountain',200],['Bergf\u00fchrer','mountain',400],['Eidgenosse','cross',620],['Bundesrat','city',800]];
+const FL={all:'Alle Kantone',untried:'Nie richtig',once:'Einmal richtig',twice:'Zweimal richtig'};
+const fa=d=>d.a.toLocaleString('de-CH')+' km\u00b2',fp=d=>'ca. '+(d.p*1000).toLocaleString('de-CH');
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const clone=o=>JSON.parse(JSON.stringify(o));
+const ICONS={
+ cross:'<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z" fill="currentColor" stroke="none"/>',
+ arrow:'<path d="M15 5l-7 7 7 7M8 12h13"/>',next:'<path d="M9 5l7 7-7 7M3 12h13"/>',close:'<path d="M6 6l12 12M6 18L18 6"/>',
+ fullscreen:'<path d="M9 3H3v6m12-6h6v6M3 15v6h6m12-6v6h-6"/>',exitfull:'<path d="M3 9h6V3m6 0v6h6M9 21v-6H3m18 0h-6v6"/>',
+ home:'<path d="M3 11l9-8 9 8M5 10v11h5v-7h4v7h5V10"/>',flag:'<path d="M5 22V3m0 0c5-5 9 5 15 0v11c-6 5-10-5-15 0"/><path d="M12 5v6m-3-3h6"/>',
+ bolt:'<path d="M13 2L4 14h7l-1 8 10-13h-8z" fill="currentColor" stroke="none"/>',
+ city:'<path d="M2 9l10-6 10 6H2zm2 2v8m5-8v8m6-8v8m5-8v8M2 21h20"/>',
+ pin:'<path d="M19 10c0 5-7 12-7 12S5 15 5 10a7 7 0 1 1 14 0z"/><circle cx="12" cy="9" r="2.5"/>',
+ outline:'<path d="M3 9l5-1 1-5 5 3 6-1-2 6 3 4-6 2-1 4-4-3-5 1-1-5-2-2z" stroke-dasharray="3 2"/>',
+ cards:'<rect x="3" y="3" width="12" height="16" rx="2" transform="rotate(-8 9 11)"/><rect x="8" y="6" width="12" height="16" rx="2" fill="var(--surface)"/><path d="M12 14h4m-2-2v4"/>',
+ book:'<path d="M12 5v16M3 3c4 0 6 0 9 2 3-2 5-2 9-2v16c-4 0-6 0-9 2-3-2-5-2-9-2z"/>',
+ compass:'<circle cx="12" cy="12" r="9"/><path d="M16 7l-2 7-7 3 3-7z" fill="currentColor" fill-opacity=".2"/>',
+ mountain:'<path d="M2 21L10 5l4 8 3-5 5 13H2zm5-10 3 2 3-2"/>',
+ waves:'<path d="M2 6c4-4 6 4 10 0s6 4 10 0M2 12c4-4 6 4 10 0s6 4 10 0M2 18c4-4 6 4 10 0s6 4 10 0"/>',
+ people:'<circle cx="8" cy="7" r="3"/><circle cx="17" cy="8" r="2.5"/><path d="M2 21v-3a6 6 0 0 1 12 0v3m2-8c4 0 6 2 6 5v3"/>',
+ speech:'<path d="M3 3h18v14H9l-5 5v-5H3zM7 7h10M7 11h7"/>',
+ ruler:'<path d="M3 17L17 3l5 5L8 22zm5-5 3 3m0-6 3 3m0-6 3 3"/>',
+ trophy:'<path d="M7 3h10v8a5 5 0 0 1-10 0zm0 2H3v4a4 4 0 0 0 4 4m10-8h4v4a4 4 0 0 1-4 4M12 16v5m-5 0h10"/>',
+ star:'<path d="M12 2l3 6.5 7 1-5 5 1 7-6-3.4L6 21l1-7-5-4.5 7-1z" fill="currentColor" stroke="none"/>',
+ chart:'<path d="M3 3v18h19M7 16l5-5 4 2 5-8"/>',
+ settings:'<circle cx="12" cy="12" r="4"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2"/>',
+ case:'<rect x="3" y="7" width="18" height="14" rx="3"/><path d="M8 7V3h8v4m-7 4v6m6-6v6"/>',
+ check:'<path d="M4 12l5 5L21 5"/>',retry:'<path d="M20 6v6h-6M20 12a8 8 0 1 0-2 6"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 3"/>',
+ download:'<path d="M12 3v12m-5-5 5 5 5-5M3 17v4h18v-4"/>',upload:'<path d="M12 16V4m-5 5 5-5 5 5M3 17v4h18v-4"/>',
+ info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7v.1"/>',
+ filter:'<path d="M3 4h18l-7 8v8l-4-2v-6z"/>',
+ rotate:'<path d="M3 9a10 10 0 0 1 17-5m0-3v5h-5M21 15a10 10 0 0 1-17 5m0 3v-5h5"/>',
+ shuffle:'<path d="M3 5h3l12 14h4m-4-4 4 4-4 4M3 19h3L18 5h4m-4-4 4 4-4 4"/>',
+ zoomin:'<circle cx="10" cy="10" r="7"/><path d="M15 15l7 7M6 10h8m-4-4v8"/>',zoomout:'<circle cx="10" cy="10" r="7"/><path d="M15 15l7 7M6 10h8"/>',
+ target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/>'
+};
+function icon(name,cls=''){return '<svg class="icon '+cls+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(ICONS[name]||ICONS.star)+'</svg>';}
+function art(name){return icon(name);}
+let storageOK=true;
+const LS={g(k){try{return localStorage.getItem(k);}catch(e){storageOK=false;return null;}},s(k,v){try{localStorage.setItem(k,v);return true;}catch(e){storageOK=false;return false;}}};
+const dp=()=>({xp:0,correct:{},wrong:{},selectedCat:'flag',filterMode:'all'});
+function validatePlayerFile(raw){
+ if(!raw||typeof raw!=='object'||!Array.isArray(raw.players)||raw.players.length<1||raw.players.length>3)throw Error('Die Datei muss 1 bis 3 Spieler enthalten.');
+ const players=raw.players.map((p,i)=>{
+  if(!p||typeof p.data!=='object'||!p.data)throw Error('Spielerdaten fehlen.');
+  const d=dp();d.selectedCat=[...CATKEYS,'mixed'].includes(p.data.selectedCat)?p.data.selectedCat:'flag';d.filterMode=Object.hasOwn(FL,p.data.filterMode)?p.data.filterMode:'all';
+  for(const field of ['correct','wrong']){
+   const values=p.data[field]||{};
+   if(Array.isArray(values)||typeof values!=='object')throw Error('Ung\u00fcltiger Punktestand.');
+   for(const [id,obj] of Object.entries(values)){
+    if(!/^\d+$/.test(id)||+id<0||+id>=26||!obj||typeof obj!=='object'||Array.isArray(obj))throw Error('Ung\u00fcltiger Kanton im Spielstand.');
+    d[field][+id]={};
+    for(const [cat,n] of Object.entries(obj)){
+     if(!CATKEYS.includes(cat)||!Number.isSafeInteger(n)||n<0||n>10000000)throw Error('Ung\u00fcltiger Kategorienstand.');
+     d[field][+id][cat]=n;
+    }
+   }
+  }
+  const name=typeof p.name==='string'?p.name.trim().slice(0,40):'';
+  return {name:name||'Spieler '+(i+1),data:d};
+ });
+ return {a:Number.isInteger(raw.a)&&raw.a>=0&&raw.a<players.length?raw.a:0,players};
+}
+let PL;let loadWarning='';
+try{const saved=LS.g(ORIGINAL_KEY);PL=saved?validatePlayerFile(JSON.parse(saved)):null;}catch(e){loadWarning='Der bisherige Spielstand konnte nicht gelesen werden. Das Original im Browser wird nicht \u00fcberschrieben, bevor du einen neuen Stand best\u00e4tigst.';}
+if(!PL)PL={a:0,players:[1,2,3].map(i=>({name:'Spieler '+i,data:dp()}))};
+let S=PL.players[PL.a].data;
+const cc=(id,k)=>(S.correct[id]&&S.correct[id][k])||0;
+const cw=(id,k)=>(S.wrong[id]&&S.wrong[id][k])||0;
+const cs=id=>CATS.reduce((a,c)=>a+Math.min(cc(id,c[0]),MX),0);
+const tot=()=>C.reduce((a,d)=>a+cs(d.id),0);
+const tier=id=>Math.min(MX,...CATS.map(c=>cc(id,c[0])));
+function profileXP(data){return C.reduce((n,d)=>n+CATS.reduce((s,c)=>s+Math.min((data.correct[d.id]||{})[c[0]]||0,MX),0),0);}
+function lv(xp=S.xp){let l=0;LV.forEach((x,i)=>{if(xp>=x[2])l=i;});const c=LV[l],n=LV[l+1];return{l:l+1,name:c[0],icon:c[1],pct:n?Math.max(0,Math.min(100,Math.round(100*(xp-c[2])/(n[2]-c[2])))):100,nn:n&&n[0],to:n?n[2]-xp:0,has:!!n};}
+function save(){PL.players[PL.a].data=S;S.xp=tot();if(!loadWarning)LS.s(ORIGINAL_KEY,JSON.stringify(PL));updateHeader();}
+PL.players.forEach(p=>p.data.xp=profileXP(p.data));
+let prefs={autoNext:true,theme:'auto'};
+try{const p=JSON.parse(LS.g(PREFS_KEY)||'null');if(p){prefs.autoNext=p.autoNext!==false;prefs.theme=['auto','light','dark'].includes(p.theme)?p.theme:'auto';}}catch(e){}
+function savePrefs(){LS.s(PREFS_KEY,JSON.stringify(prefs));applyTheme();}
+function applyTheme(){const dark=prefs.theme==='dark'||prefs.theme==='auto'&&matchMedia('(prefers-color-scheme:dark)').matches;document.documentElement.dataset.theme=dark?'dark':'light';}
+matchMedia('(prefers-color-scheme:dark)').addEventListener?.('change',applyTheme);applyTheme();
+function mark(id,ok,cat){
+ if(!CATKEYS.includes(cat)||!C[id])return 0;
+ const before=tot();
+ if(ok){S.correct[id]=S.correct[id]||{};S.correct[id][cat]=cc(id,cat)+1;if(S.wrong[id]){delete S.wrong[id][cat];if(!Object.keys(S.wrong[id]).length)delete S.wrong[id];}}
+ else{S.wrong[id]=S.wrong[id]||{};S.wrong[id][cat]=cw(id,cat)+1;}
+ save();return tot()-before;
+}
+function fpool(cat){if(S.filterMode==='all')return [...C];const t={untried:0,once:1,twice:2}[S.filterMode];return C.filter(d=>(cat?cc(d.id,cat):tier(d.id))<=t);}
+function weightedPick(cat,last,available=null){const base=fpool(cat).filter(d=>!available||available.has(d.i));if(!base.length)return null;const other=base.filter(d=>d.id!==last),candidates=other.length?other:base,list=[];candidates.forEach(d=>{for(let i=0;i<(cw(d.id,cat)>0?3:1);i++)list.push(d);});return pick(list);}
+function mastery(n){return '<span class="mastery" aria-label="'+Math.min(3,n)+' von 3">'+[0,1,2].map(i=>'<i class="'+(i<n?'on':'')+'"></i>').join('')+'</span>';}
+let toastId=0;
+function toast(text){clearTimeout(toastId);$('toast').textContent=text;$('toast').classList.add('show');toastId=setTimeout(()=>$('toast').classList.remove('show'),2300);}
+function button(label,action,cls='',attrs=''){return '<button class="btn '+cls+'" data-action="'+action+'" '+attrs+'>'+label+'</button>';}
+
+// ------------- Original graphic sources, now progressive and fail-safe. -------------
+// Fetch failures never substitute an invented canton flag or erase the UI.
+const FLAG_SOURCES={"ZH": ["https://upload.wikimedia.org/wikipedia/commons/9/9b/Flag_of_Canton_of_Z%C3%BCrich.svg", "https://upload.wikimedia.org/wikipedia/commons/7/79/Flag_of_the_Canton_of_Z%C3%BCrich.svg", "https://upload.wikimedia.org/wikipedia/commons/1/1d/Flag_of_Canton_of_Zurich.svg", "https://upload.wikimedia.org/wikipedia/commons/7/73/Flag_of_the_Canton_of_Zurich.svg"], "BE": ["https://upload.wikimedia.org/wikipedia/commons/3/30/Flag_of_Canton_of_Bern.svg", "https://upload.wikimedia.org/wikipedia/commons/7/79/Flag_of_the_Canton_of_Bern.svg"], "LU": ["https://upload.wikimedia.org/wikipedia/commons/d/db/Flag_of_Canton_of_Lucerne.svg", "https://upload.wikimedia.org/wikipedia/commons/6/66/Flag_of_the_Canton_of_Lucerne.svg", "https://upload.wikimedia.org/wikipedia/commons/e/e0/Flag_of_Canton_of_Luzern.svg", "https://upload.wikimedia.org/wikipedia/commons/3/32/Flag_of_the_Canton_of_Luzern.svg"], "UR": ["https://upload.wikimedia.org/wikipedia/commons/c/ca/Flag_of_Canton_of_Uri.svg", "https://upload.wikimedia.org/wikipedia/commons/8/85/Flag_of_the_Canton_of_Uri.svg"], "SZ": ["https://upload.wikimedia.org/wikipedia/commons/f/fb/Flag_of_Canton_of_Schwyz.svg", "https://upload.wikimedia.org/wikipedia/commons/e/e5/Flag_of_the_Canton_of_Schwyz.svg"], "OW": ["https://upload.wikimedia.org/wikipedia/commons/7/76/Flag_of_Canton_of_Obwalden.svg", "https://upload.wikimedia.org/wikipedia/commons/6/61/Flag_of_the_Canton_of_Obwalden.svg"], "NW": ["https://upload.wikimedia.org/wikipedia/commons/e/e3/Flag_of_Canton_of_Nidwalden.svg", "https://upload.wikimedia.org/wikipedia/commons/d/d7/Flag_of_the_Canton_of_Nidwalden.svg"], "GL": ["https://upload.wikimedia.org/wikipedia/commons/d/dc/Flag_of_Canton_of_Glarus.svg", "https://upload.wikimedia.org/wikipedia/commons/f/fc/Flag_of_the_Canton_of_Glarus.svg"], "ZG": ["https://upload.wikimedia.org/wikipedia/commons/f/ff/Flag_of_Canton_of_Zug.svg", "https://upload.wikimedia.org/wikipedia/commons/b/be/Flag_of_the_Canton_of_Zug.svg"], "FR": ["https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_Canton_of_Fribourg.svg", "https://upload.wikimedia.org/wikipedia/commons/5/50/Flag_of_the_Canton_of_Fribourg.svg", "https://upload.wikimedia.org/wikipedia/commons/e/e7/Flag_of_Canton_of_Freiburg.svg", "https://upload.wikimedia.org/wikipedia/commons/0/05/Flag_of_the_Canton_of_Freiburg.svg"], "SO": ["https://upload.wikimedia.org/wikipedia/commons/4/4e/Flag_of_Canton_of_Solothurn.svg", "https://upload.wikimedia.org/wikipedia/commons/1/19/Flag_of_the_Canton_of_Solothurn.svg"], "BS": ["https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_Canton_of_Basel-Stadt.svg", "https://upload.wikimedia.org/wikipedia/commons/c/c8/Flag_of_the_Canton_of_Basel-Stadt.svg", "https://upload.wikimedia.org/wikipedia/commons/1/11/Flag_of_Canton_of_Basel_City.svg", "https://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_the_Canton_of_Basel_City.svg"], "BL": ["https://upload.wikimedia.org/wikipedia/commons/b/b8/Flag_of_Canton_of_Basel-Landschaft.svg", "https://upload.wikimedia.org/wikipedia/commons/3/3c/Flag_of_the_Canton_of_Basel-Landschaft.svg", "https://upload.wikimedia.org/wikipedia/commons/8/8d/Flag_of_Canton_of_Basel-Country.svg", "https://upload.wikimedia.org/wikipedia/commons/8/8f/Flag_of_the_Canton_of_Basel-Country.svg"], "SH": ["https://upload.wikimedia.org/wikipedia/commons/b/b0/Flag_of_Canton_of_Schaffhausen.svg", "https://upload.wikimedia.org/wikipedia/commons/4/46/Flag_of_the_Canton_of_Schaffhausen.svg"], "AR": ["https://upload.wikimedia.org/wikipedia/commons/f/f1/Flag_of_Canton_of_Appenzell_Ausserrhoden.svg", "https://upload.wikimedia.org/wikipedia/commons/5/5a/Flag_of_the_Canton_of_Appenzell_Ausserrhoden.svg"], "AI": ["https://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Canton_of_Appenzell_Innerrhoden.svg", "https://upload.wikimedia.org/wikipedia/commons/e/ee/Flag_of_the_Canton_of_Appenzell_Innerrhoden.svg"], "SG": ["https://upload.wikimedia.org/wikipedia/commons/a/a1/Flag_of_Canton_of_Sankt_Gallen.svg", "https://upload.wikimedia.org/wikipedia/commons/4/4d/Flag_of_the_Canton_of_Sankt_Gallen.svg", "https://upload.wikimedia.org/wikipedia/commons/7/77/Flag_of_Canton_of_St._Gallen.svg", "https://upload.wikimedia.org/wikipedia/commons/7/70/Flag_of_the_Canton_of_St._Gallen.svg"], "GR": ["https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_Canton_of_Graub%C3%BCnden.svg", "https://upload.wikimedia.org/wikipedia/commons/3/39/Flag_of_the_Canton_of_Graub%C3%BCnden.svg", "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Canton_of_Grisons.svg", "https://upload.wikimedia.org/wikipedia/commons/a/ac/Flag_of_the_Canton_of_Grisons.svg"], "AG": ["https://upload.wikimedia.org/wikipedia/commons/6/62/Flag_of_Canton_of_Aargau.svg", "https://upload.wikimedia.org/wikipedia/commons/1/1f/Flag_of_the_Canton_of_Aargau.svg"], "TG": ["https://upload.wikimedia.org/wikipedia/commons/1/18/Flag_of_Canton_of_Thurgau.svg", "https://upload.wikimedia.org/wikipedia/commons/8/80/Flag_of_the_Canton_of_Thurgau.svg"], "TI": ["https://upload.wikimedia.org/wikipedia/commons/5/5f/Flag_of_Canton_of_Ticino.svg", "https://upload.wikimedia.org/wikipedia/commons/f/f2/Flag_of_the_Canton_of_Ticino.svg", "https://upload.wikimedia.org/wikipedia/commons/1/11/Flag_of_Canton_of_Tessin.svg", "https://upload.wikimedia.org/wikipedia/commons/a/af/Flag_of_the_Canton_of_Tessin.svg"], "VD": ["https://upload.wikimedia.org/wikipedia/commons/d/df/Flag_of_Canton_of_Vaud.svg", "https://upload.wikimedia.org/wikipedia/commons/0/08/Flag_of_the_Canton_of_Vaud.svg"], "VS": ["https://upload.wikimedia.org/wikipedia/commons/3/34/Flag_of_Canton_of_Valais.svg", "https://upload.wikimedia.org/wikipedia/commons/e/ef/Flag_of_the_Canton_of_Valais.svg", "https://upload.wikimedia.org/wikipedia/commons/1/11/Flag_of_Canton_of_Wallis.svg", "https://upload.wikimedia.org/wikipedia/commons/4/49/Flag_of_the_Canton_of_Wallis.svg"], "NE": ["https://upload.wikimedia.org/wikipedia/commons/5/57/Flag_of_Canton_of_Neuch%C3%A2tel.svg", "https://upload.wikimedia.org/wikipedia/commons/c/c5/Flag_of_the_Canton_of_Neuch%C3%A2tel.svg", "https://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Canton_of_Neuchatel.svg", "https://upload.wikimedia.org/wikipedia/commons/8/82/Flag_of_the_Canton_of_Neuchatel.svg"], "GE": ["https://upload.wikimedia.org/wikipedia/commons/8/83/Flag_of_Canton_of_Geneva.svg", "https://upload.wikimedia.org/wikipedia/commons/6/67/Flag_of_the_Canton_of_Geneva.svg", "https://upload.wikimedia.org/wikipedia/commons/e/eb/Flag_of_Canton_of_Gen%C3%A8ve.svg", "https://upload.wikimedia.org/wikipedia/commons/6/6f/Flag_of_the_Canton_of_Gen%C3%A8ve.svg"], "JU": ["https://upload.wikimedia.org/wikipedia/commons/7/74/Flag_of_Canton_of_Jura.svg", "https://upload.wikimedia.org/wikipedia/commons/8/81/Flag_of_the_Canton_of_Jura.svg"]};
+const SOURCE_NAMES={"ZH": ["Z\u00fcrich", "Zurich"], "BE": ["Bern"], "LU": ["Lucerne", "Luzern"], "UR": ["Uri"], "SZ": ["Schwyz"], "OW": ["Obwalden"], "NW": ["Nidwalden"], "GL": ["Glarus"], "ZG": ["Zug"], "FR": ["Fribourg", "Freiburg"], "SO": ["Solothurn"], "BS": ["Basel-Stadt", "Basel City", "Basel"], "BL": ["Basel-Landschaft", "Basel-Country", "Basel-Land"], "SH": ["Schaffhausen"], "AR": ["Appenzell Ausserrhoden"], "AI": ["Appenzell Innerrhoden"], "SG": ["Sankt Gallen", "St. Gallen", "Saint Gallen"], "GR": ["Graub\u00fcnden", "Grisons"], "AG": ["Aargau"], "TG": ["Thurgau"], "TI": ["Ticino", "Tessin"], "VD": ["Vaud"], "VS": ["Valais", "Wallis"], "NE": ["Neuch\u00e2tel", "Neuchatel"], "GE": ["Geneva", "Gen\u00e8ve"], "JU": ["Jura"]};
+const AS={flags:{},dataFlags:{},flagState:'idle',geo:null,geoState:'idle',loading:false,lastError:'',readyAt:null,attempt:0};
+let embedded={flags:{},geo:null};try{embedded=JSON.parse($('sq-embedded').textContent);}catch(e){}
+const assetDB=new Promise(resolve=>{
+ setTimeout(()=>resolve(null),3500);
+ try{const r=indexedDB.open('swizquizTabletAssetsV2',1);r.onupgradeneeded=()=>r.result.createObjectStore('assets');r.onsuccess=()=>resolve(r.result);r.onerror=()=>resolve(null);r.onblocked=()=>resolve(null);}catch(e){resolve(null);}
+});
+async function dbGet(key){const db=await assetDB;if(!db)return null;return new Promise(resolve=>{try{const r=db.transaction('assets').objectStore('assets').get(key);r.onsuccess=()=>resolve(r.result||null);r.onerror=()=>resolve(null);}catch(e){resolve(null);}});}
+async function dbPut(key,value){const db=await assetDB;if(!db)return false;return new Promise(resolve=>{try{const t=db.transaction('assets','readwrite');t.objectStore('assets').put(value,key);t.oncomplete=()=>resolve(true);t.onerror=()=>resolve(false);}catch(e){resolve(false);}});}
+async function timedFetch(url,ms=7500){const ctl=new AbortController(),t=setTimeout(()=>ctl.abort(),ms);try{const r=await fetch(url,{signal:ctl.signal,mode:'cors',credentials:'omit'});if(!r.ok)throw Error('HTTP '+r.status);return r;}finally{clearTimeout(t);}}
+function imageValid(src,ms=4500){return new Promise(resolve=>{const im=new Image(),id=setTimeout(()=>finish(false),ms);let ended=false;function finish(ok){if(ended)return;ended=true;clearTimeout(id);im.onload=im.onerror=null;resolve(ok);}im.onload=()=>finish(im.naturalWidth>0);im.onerror=()=>finish(false);im.src=src;});}
+function blobData(blob){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsDataURL(blob);});}
+async function fetchFlag(code){
+ if(AS.dataFlags[code])return;
+ let remote=null;
+ for(const src of FLAG_SOURCES[code]){
+  try{const response=await timedFetch(src,3500);const blob=await response.blob();if(blob.size>5000000)throw Error('Bild zu gross');const data=await blobData(blob);if(await imageValid(data,2500)){AS.flags[code]=data;AS.dataFlags[code]=data;await dbPut('flag-'+code,data);assetsChanged();return;}}catch(e){}
+ }
+ // Resolve aliases through the same Wikimedia service used in the original.
+ try{
+  const titles=SOURCE_NAMES[code].slice(0,4).flatMap(n=>['File:Flag of Canton of '+n+'.svg','File:Flag of the Canton of '+n+'.svg']);
+  const url='https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=imageinfo&iiprop=url&titles='+encodeURIComponent(titles.join('|'));
+  const data=await (await timedFetch(url,6500)).json();
+  const valid=Object.values(data.query?.pages||{}).flatMap(p=>p.imageinfo||[]).map(i=>i.url).filter(u=>/^https:\/\/upload\.wikimedia\.org\//.test(u));
+  for(const src of valid.slice(0,2)){
+   try{const blob=await (await timedFetch(src,4500)).blob(),d=await blobData(blob);if(await imageValid(d,2500)){AS.flags[code]=d;AS.dataFlags[code]=d;await dbPut('flag-'+code,d);assetsChanged();return;}}catch(e){}
+  }
+ }catch(e){}
+ // Display a real image even on a CDN without CORS; it remains labelled online-only.
+ for(const src of FLAG_SOURCES[code].slice(0,2))if(await imageValid(src,2500)){remote=src;break;}
+ if(remote){AS.flags[code]=remote;await dbPut('flag-remote-'+code,remote);assetsChanged();}
+}
+function decodeTopo(t,o){
+ const tr=t.transform,A=t.arcs.map(a=>{let x=0,y=0;return a.map(p=>{if(tr){x+=p[0];y+=p[1];return[x*tr.scale[0]+tr.translate[0],y*tr.scale[1]+tr.translate[1]];}return[p[0],p[1]];});});
+ const ar=i=>i<0?A[~i].slice().reverse():A[i];
+ const ring=r=>r.reduce((out,i)=>{const a=ar(i);return out.concat(out.length?a.slice(1):a);},[]);
+ return o.geometries.map(g=>({g,polys:g.type==='Polygon'?[g.arcs.map(ring)]:g.type==='MultiPolygon'?g.arcs.map(p=>p.map(ring)):[]}));
+}
+function makeGeo(t){
+ if(!t?.objects?.cantons||!Array.isArray(t.arcs))throw Error('Keine g\u00fcltigen Kantonsdaten.');
+ const oc=decodeTopo(t,t.objects.cantons),cp={};
+ oc.forEach(o=>{const p=o.g.properties||{};let i=+o.g.id;if(!(i>=1&&i<=26)&&p.abbr)i=C.findIndex(d=>d.i===p.abbr)+1;if(i>=1&&i<=26)cp[C[i-1].i]=o.polys;});
+ if(Object.keys(cp).length!==26)throw Error('Kantonsdaten unvollst\u00e4ndig.');
+ const pts=k=>cp[k].flat(2),all=C.flatMap(d=>pts(d.i)),first=all[0];
+ const my=k=>pts(k).reduce((n,p)=>n+p[1],0)/pts(k).length;
+ const geo=first[0]>5&&first[0]<11&&first[1]>45&&first[1]<48.5,north=geo||my('TI')<my('ZH'),kx=geo?Math.cos(47*Math.PI/180):1;
+ const sc=q=>[q[0]*kx,north?-q[1]:q[1]],ss=all.map(sc);
+ let x0=Infinity,x1=-Infinity,y0=Infinity,y1=-Infinity;ss.forEach(q=>{x0=Math.min(x0,q[0]);x1=Math.max(x1,q[0]);y0=Math.min(y0,q[1]);y1=Math.max(y1,q[1]);});
+ const scale=Math.min(316/(x1-x0),186/(y1-y0));
+ const ox=(360-(x1-x0)*scale)/2,oy=(225-(y1-y0)*scale)/2;
+ const mp=(x,y)=>{const p=sc([x,y]);return[(p[0]-x0)*scale+ox,(p[1]-y0)*scale+oy];};
+ const rp=rings=>rings.map(r=>'M'+r.map(q=>mp(...q).map(v=>v.toFixed(2)).join(',')).join('L')+'Z').join('');
+ const paths={},bounds={},centers={};
+ C.forEach(d=>{const p=pts(d.i).map(q=>mp(...q));paths[d.i]=cp[d.i].map(rp).join('');const xs=p.map(q=>q[0]),ys=p.map(q=>q[1]);bounds[d.i]=[Math.min(...xs),Math.min(...ys),Math.max(...xs),Math.max(...ys)];centers[d.i]=[(bounds[d.i][0]+bounds[d.i][2])/2,(bounds[d.i][1]+bounds[d.i][3])/2];});
+ let lakes='';if(t.objects.lakes)try{lakes=decodeTopo(t,t.objects.lakes).map(o=>o.polys.map(rp).join('')).join('');}catch(e){}
+ let mnx=Infinity,mxx=-Infinity,mny=Infinity,mxy=-Infinity;all.forEach(q=>{mnx=Math.min(mnx,q[0]);mxx=Math.max(mxx,q[0]);mny=Math.min(mny,q[1]);mxy=Math.max(mxy,q[1]);});
+ return{paths,bounds,centers,lakes,projection:{geo,north,kx,x0,y0,scale,ox,oy,mnx,mxx,mny,mxy},viewBox:[0,0,360,225],source:'swiss-maps@4/2021/ch-combined.json',credit:'Bundesamt f\u00fcr Statistik (BFS), GEOSTAT',loaded:Date.now()};
+}
+async function fetchGeo(){
+ if(AS.geo)return;
+ for(const url of ['https://unpkg.com/swiss-maps@4/2021/ch-combined.json','https://cdn.jsdelivr.net/npm/swiss-maps@4/2021/ch-combined.json']){
+  try{AS.geo=makeGeo(await (await timedFetch(url,14000)).json());AS.geoState='ready';await dbPut('geo-2021',AS.geo);assetsChanged();loadNeighbours(AS.geo).catch(()=>{});return;}catch(e){AS.lastError=e.message;}
+ }
+ AS.geoState='error';assetsChanged();
+}
+
+const NBC={DE:['germany','Deutschland',8.9,48.45],FR:['france','Frankreich',5.4,47.2],IT:['italy','Italien',9.3,45.5],AT:['austria','\u00d6sterreich',11.2,47.2],LI:['liechtenstein','FL',9.55,47.17]};
+function projectNeighbour(lo,la,p){
+ let x=lo,y=la;
+ if(!p.geo){
+  const phi=(la*3600-169028.66)/1e4,lam=(lo*3600-26782.5)/1e4;
+  const east=600072.37+211455.93*lam-10938.51*lam*phi-.36*lam*phi*phi-44.54*lam*lam*lam;
+  const north=200147.07+308807.95*phi+3745.25*lam*lam+76.63*phi*phi-194.56*lam*lam*phi+119.79*phi*phi*phi;
+  const kx=(p.mxx-p.mnx)/(833850-485410),ky=(p.mxy-p.mny)/(295935-75270);
+  x=p.mnx+(east-485410)*kx;y=p.north?p.mny+(north-75270)*ky:p.mxy-(north-75270)*ky;
+ }
+ return [(x*p.kx-p.x0)*p.scale+p.ox,((p.north?-y:y)-p.y0)*p.scale+p.oy];
+}
+async function loadNeighbours(g){
+ if(!g.projection||g.neighbours)return;
+ const items=await Promise.all(Object.entries(NBC).map(async([code,[slug,label,lo,la]])=>{
+  try{
+   const json=await(await timedFetch('https://cdn.jsdelivr.net/npm/world-geojson@3.4.0/countries/'+slug+'.json',6000)).json(),polys=[];
+   function walk(x){if(!x)return;if(x.features)x.features.forEach(walk);else if(x.geometry)walk(x.geometry);else if(x.type==='Polygon')polys.push(x.coordinates);else if(x.type==='MultiPolygon')polys.push(...x.coordinates);}
+   walk(json);
+   const path=polys.map(p=>p.map(r=>'M'+r.map(q=>projectNeighbour(q[0],q[1],g.projection).map(n=>n.toFixed(2)).join(',')).join('L')+'Z').join('')).join('');
+   const xy=projectNeighbour(lo,la,g.projection);return {path,label,xy};
+  }catch(e){return null;}
+ }));
+ const ok=items.filter(Boolean);if(!ok.length)return;
+ g.neighbours=ok.map(i=>i.path).join('');g.neighbourLabels=ok.map(i=>({text:i.label,x:i.xy[0],y:i.xy[1]}));await dbPut('geo-2021',g);if(AS.geo===g)assetsChanged();
+}
+function surroundingMarkup(){return (AS.geo?.neighbours?'<path class="sq-neighbour" fill-rule="evenodd" d="'+AS.geo.neighbours+'"/>':'')+(AS.geo?.neighbourLabels||[]).map(l=>'<text class="sq-label" x="'+(+l.x).toFixed(2)+'" y="'+(+l.y).toFixed(2)+'">'+esc(l.text)+'</text>').join('');}
+
+function validGeo(g){return g&&typeof g==='object'&&C.every(d=>typeof g.paths?.[d.i]==='string'&&Array.isArray(g.bounds?.[d.i])&&g.bounds[d.i].length===4)&&!Object.values(g.paths).some(p=>/[^0-9eE., +\-MLZmlz]/.test(p));}
+async function loadAssets(force=false){
+ if(AS.loading)return;AS.loading=true;AS.attempt++;
+ try{
+  if(!force){
+   if(validGeo(embedded.geo)){AS.geo=embedded.geo;AS.geoState='ready';}
+   const cached=await dbGet('geo-2021');if(!AS.geo&&validGeo(cached)){AS.geo=cached;AS.geoState='ready';}
+   await Promise.all(C.map(async d=>{const data=embedded.flags?.[d.i]||await dbGet('flag-'+d.i);if(typeof data==='string'&&data.startsWith('data:image/')&&await imageValid(data,2500)){AS.flags[d.i]=data;AS.dataFlags[d.i]=data;}else{const remote=await dbGet('flag-remote-'+d.i);if(typeof remote==='string'&&remote.startsWith('https://upload.wikimedia.org/')&&await imageValid(remote,2000))AS.flags[d.i]=remote;}}));
+  }
+  assetsChanged();
+  const missing=C.filter(d=>force?!AS.dataFlags[d.i]:!AS.flags[d.i]);
+  if(navigator.onLine===false){AS.flagState=Object.keys(AS.flags).length===26?'ready':'offline';AS.geoState=AS.geo?'ready':'offline';return;}
+  AS.flagState=missing.length?'loading':'ready';if(!AS.geo)AS.geoState='loading';assetsChanged();
+  let cursor=0;const worker=async()=>{while(cursor<missing.length){const d=missing[cursor++];await fetchFlag(d.i);}};
+  await Promise.allSettled([fetchGeo(),...Array.from({length:5},worker)]);
+  AS.flagState=Object.keys(AS.flags).length===26?'ready':'error';AS.geoState=AS.geo?'ready':'error';
+ }catch(e){AS.lastError=e.message;AS.flagState='error';if(!AS.geo)AS.geoState='error';}
+ finally{AS.loading=false;assetsChanged();}
+}
+function flagMarkup(d,cls='flag-frame',answer=false){const src=AS.flags[d.i];return '<span class="'+cls+'" data-flag="'+d.i+'" data-answer="'+(answer?'1':'0')+'">'+(src?'<img class="flag-img" src="'+esc(src)+'" alt="'+(answer?'Kantonsflagge':esc('Flagge '+d.n))+'" draggable="false">':'<span class="flag-unavailable">'+icon('flag')+'<span>Flagge noch nicht geladen</span></span>')+'</span>';}
+function outlineMarkup(d){
+ if(!AS.geo)return '<div class="flag-unavailable">Umriss noch nicht geladen</div>';
+ const [x0,y0,x1,y1]=AS.geo.bounds[d.i],s=Math.max(x1-x0,y1-y0)*.13;
+ return '<svg class="outline-figure" viewBox="'+[x0-s,y0-s,x1-x0+2*s,y1-y0+2*s].join(' ')+'" role="img" aria-label="Kantonsumriss"><path fill-rule="evenodd" d="'+AS.geo.paths[d.i]+'"/></svg>';
+}
+function assetLabel(){const n=Object.keys(AS.flags).length;if(n===26&&AS.geo)return{state:'ready',text:Object.keys(AS.dataFlags).length===26?'26 Flaggen & Karte lokal bereit':'26 Flaggen & Karte bereit'};if(AS.loading)return{state:'loading',text:'Grafiken laden: '+n+'/26 Flaggen'};return{state:'error',text:n+'/26 Flaggen '+(AS.geo?'\u00b7 Karte bereit':'\u00b7 Karte noch nicht geladen')};}
+let lastAssetRender=0;
+function assetsChanged(){
+ const info=assetLabel();document.querySelectorAll('[data-asset-status]').forEach(el=>{el.innerHTML='<i class="status-dot '+info.state+'"></i><span>'+esc(info.text)+'</span>';});
+ document.querySelectorAll('[data-flag]').forEach(el=>{const d=BY[el.dataset.flag],src=d&&AS.flags[d.i];if(src&&!el.querySelector('img'))el.innerHTML='<img class="flag-img" src="'+esc(src)+'" alt="'+(el.dataset.answer==='1'?'Kantonsflagge':esc('Flagge '+d.n))+'" draggable="false">';});
+ if(view==='waiting'&&pending){const n=Object.keys(AS.flags).length;const count=$('assetCount');if(count)count.textContent=pending.type==='geo'?(AS.geo?'Karte bereit':'Karte wird vorbereitet'):n+' / 26 Flaggen bereit';const progress=$('assetBar');if(progress)progress.style.width=(pending.type==='geo'?(AS.geo?100:25):100*n/26)+'%';const partial=$('partialStart');if(partial)partial.disabled=n<(pending.min||4);if((pending.type==='geo'&&AS.geo)||(pending.type==='flags'&&n===26)){const p=pending;pending=null;routeCleanup();p.run();}}
+ if(AS.geo){if(AS.geo.neighbours)document.querySelectorAll('[data-surrounding]').forEach(el=>{if(!el.querySelector('path'))el.innerHTML=surroundingMarkup();});document.querySelectorAll('[data-outline]').forEach(el=>{if(!el.querySelector('svg')&&BY[el.dataset.outline])el.innerHTML=outlineMarkup(BY[el.dataset.outline]);});if(view==='stats'&&document.querySelector('[data-await-geo]')){renderStats();return;}}
+ const off=$('offlineExport');if(off)off.disabled=!(AS.geo&&Object.keys(AS.dataFlags).length===26);
+}
+
+// ------------- Navigation and stable tablet shell. -------------
+let view='home',routeToken=0,cleanupFns=[],timers=new Set(),pending=null,round=null,mem=null,mapState=null;
+let learnOrder=null,learnIndex=0,learnSearch='',selectedMapCode=null,statsCat='all',statsCode=null,summary=null;
+let lastFocus=null,dialogPage=0,resizeFrame=0;
+function routeCleanup(){routeToken++;for(const t of timers){clearTimeout(t);clearInterval(t);}timers.clear();for(const f of cleanupFns)try{f();}catch(e){}cleanupFns=[];}
+function later(fn,ms){const token=routeToken;const id=setTimeout(()=>{timers.delete(id);if(token===routeToken)fn();},ms);timers.add(id);return id;}
+function every(fn,ms){const id=setInterval(fn,ms);timers.add(id);return id;}
+function updateHeader(){
+ const l=lv();$('top').innerHTML='<button class="brand" data-action="home" aria-label="SwizQuiz Startseite"><span class="brand-mark">'+icon('cross')+'</span><span><span class="brand-name">SwizQuiz</span><span class="brand-note">Tablet Edition 2.0</span></span></button><div class="top-right"><button class="top-button" data-action="players" title="Spieler wechseln"><span class="profile-avatar">'+(PL.a+1)+'</span><span class="profile-name">'+esc(PL.players[PL.a].name)+'</span></button><button class="top-button points" data-action="stats" title="Fortschritt">'+icon('star')+'<span>'+S.xp+' EP</span></button><button class="top-button icon-only" data-action="home" aria-label="Zur Spielauswahl">'+icon('home')+'</button><button class="top-button icon-only" data-action="settings" aria-label="Einstellungen">'+icon('settings')+'</button><button class="top-button full-button" data-action="fullscreen" id="fullscreenButton" aria-label="Vollbild einschalten">'+icon('fullscreen')+'<span>Vollbild</span></button></div>';
+ syncFullscreen();
+}
+function routebar(title,meta='',back='home'){return '<div class="routebar">'+button(icon('arrow'),back,'small','aria-label="Zur\u00fcck"')+'<h1 tabindex="-1">'+esc(title)+'</h1><div class="meta">'+meta+'</div></div>';}
+function paint(name,html){routeCleanup();view=name;$('main').innerHTML='<section class="screen '+name+'" data-screen="'+name+'">'+html+'</section>';updateHeader();assetsChanged();scheduleLayout();}
+function go(name,arg){pending=null;closeDialog();if(name!=='learn')learnSearch='';const render={home:renderHome,qcat:renderCategories,stats:renderStats,learn:()=>renderLearn(arg),smap:renderExplore,players:renderPlayers,settings:renderSettings};if(render[name])render[name]();}
+function syncFullscreen(){const full=!!(document.fullscreenElement||document.webkitFullscreenElement),el=$('fullscreenButton');if(el){el.innerHTML=icon(full?'exitfull':'fullscreen')+'<span>'+(full?'Fenster':'Vollbild')+'</span>';el.setAttribute('aria-label',full?'Vollbild verlassen':'Vollbild einschalten');el.setAttribute('aria-pressed',String(full));}}
+async function toggleFullscreen(){
+ try{if(document.fullscreenElement||document.webkitFullscreenElement){const fn=document.exitFullscreen||document.webkitExitFullscreen;if(fn)await fn.call(document);}
+ else{const el=document.documentElement,fn=el.requestFullscreen||el.webkitRequestFullscreen;if(!fn){toast('Dieser Browser unterst\u00fctzt Vollbild hier nicht. Bitte die Seite direkt im Tablet-Browser \u00f6ffnen.');return;}await fn.call(el,{navigationUI:'hide'});}}
+ catch(e){toast('Vollbild wurde vom Browser nicht freigegeben. Die Seite bleibt normal bedienbar.');}
+ syncFullscreen();scheduleLayout();
+}
+function scheduleLayout(){if(resizeFrame)return;resizeFrame=requestAnimationFrame(()=>{resizeFrame=0;const v=window.visualViewport;const h=Math.floor(v?.height||innerHeight);document.documentElement.style.setProperty('--app-h',h+'px');fitMemory();});}
+window.addEventListener('resize',scheduleLayout);window.visualViewport?.addEventListener('resize',scheduleLayout);window.addEventListener('orientationchange',scheduleLayout);document.addEventListener('fullscreenchange',()=>{syncFullscreen();scheduleLayout();});document.addEventListener('webkitfullscreenchange',()=>{syncFullscreen();scheduleLayout();});
+function fitMemory(){if(view!=='mem')return;const stage=$('memoryStage'),board=$('memoryBoard');if(!stage||!board)return;const r=stage.getBoundingClientRect();const gap=r.height<370?7:9;const h=Math.max(0,Math.floor(r.height-2)),w=Math.max(0,Math.floor(Math.min(r.width-2,h*1.65)));board.style.width=w+'px';board.style.height=h+'px';board.style.gap=gap+'px';}
+function openDialog(title,body){lastFocus=document.activeElement;$('dialogLayer').innerHTML='<div class="dialog"><div class="dialog-header"><h2 id="dialogTitle">'+esc(title)+'</h2><button data-action="close-dialog" aria-label="Schliessen">'+icon('close')+'</button></div><div class="dialog-body">'+body+'</div></div>';$('dialogLayer').classList.add('open');$('dialogLayer').querySelector('button')?.focus({preventScroll:true});}
+function closeDialog(){const had=$('dialogLayer').classList.contains('open');$('dialogLayer').classList.remove('open');$('dialogLayer').innerHTML='';if(had&&lastFocus?.isConnected)lastFocus.focus({preventScroll:true});}
+$('dialogLayer').addEventListener('click',e=>{if(e.target===$('dialogLayer'))closeDialog();});
+document.addEventListener('keydown',e=>{
+ if(!$('dialogLayer').classList.contains('open'))return;
+ if(e.key==='Escape'){closeDialog();return;}
+ if(e.key==='Tab'){const els=[...$('dialogLayer').querySelectorAll('button:not(:disabled),input:not(:disabled),select:not(:disabled),a[href]')];if(!els.length)return;const first=els[0],last=els.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}
+});
+function renderHome(){
+ const l=lv(),difficult=C.filter(d=>Object.values(S.wrong[d.id]||{}).reduce((n,x)=>n+x,0)>=2),info=assetLabel();
+ const cards=[
+  ['qcat','Quiz','9 Kategorien & gemischt','speech','#be4d3c','#fae8e1','#cfaca0','EP'],
+  ['flash','Flaggen-Blitz','30 Fragen \u00b7 60 Sekunden','bolt','#bf8725','#fcf0d3','#dbbe7f','EP'],
+  ['duel','Hauptstadt-Duell','Die richtige Hauptstadt','city','#377e84','#e0f0ed','#9fbdb7','EP'],
+  ['map-game','Auf Karte finden','Tippe den Kanton an','pin','#596f9a','#e8edf7','#b0b9ce','EP'],
+  ['outline-game','Umriss erkennen','Eine Form. Ein Kanton.','outline','#886e9d','#f0e8f3','#c3b0c9','EP'],
+  ['memory','Flaggen-Memory','Flagge und Name verbinden','cards','#c57577','#fbe9e7','#d6b0aa','EP'],
+  ['learn','Lernmodus','Entdecken ohne Zeitdruck','book','#517d60','#e3efe2','#aec1a4','FREI'],
+  ['smap','Schweizkarte','Alle Kantone erkunden','compass','#6d8383','#e8efeb','#b7c3b7','FREI']
+ ];
+ const html='<div class="welcome"><div><div class="eyebrow">26 Kantone. Deine Schweiz.</div><h1>Gr\u00fcezi, '+esc(PL.players[PL.a].name)+'.</h1><p>W\u00e4hle dein n\u00e4chstes Abenteuer.</p></div><button class="home-progress" data-action="stats"><span class="level-symbol">'+icon(l.icon)+'</span><span><strong>'+esc(l.name)+'</strong><span class="mini-progress"><span style="width:'+l.pct+'%"></span></span><small>'+(l.has?'Noch '+l.to+' EP bis '+esc(l.nn):'H\u00f6chstes Level erreicht')+'</small></span>'+icon('next')+'</button></div>'+
+ '<div class="mode-grid">'+cards.map(([action,title,sub,ic,tone,tint,foot,badge])=>'<button class="mode-card" data-action="'+action+'" style="--tone:'+tone+';--tint:'+tint+';--foot:'+foot+'"><span class="badge">'+badge+'</span><span class="mode-art">'+art(ic)+'</span><h2>'+title+'</h2><p>'+sub+'</p></button>').join('')+'</div>'+
+ '<div class="home-bottom"><div style="display:flex;gap:7px">'+button(icon('filter')+esc(FL[S.filterMode]),'filter','small')+button(icon('target')+'Schwierige Kantone'+(difficult.length?' \u00b7 '+difficult.length:''),'difficult','small')+'</div><button class="asset-status" style="background:transparent" data-action="assets" data-asset-status><i class="status-dot '+info.state+'"></i><span>'+esc(info.text)+'</span></button></div>';
+ paint('home',html);
+}
+function renderCategories(){paint('categories',routebar('Dein Quiz-Thema')+'<div class="category-grid">'+QC.map(c=>'<button class="category-card" data-action="category" data-cat="'+c[0]+'">'+icon(c[2])+'<strong>'+esc(c[1])+'</strong><small>'+(c[0]==='mixed'?'Abwechslungsreiche Runde':fpool(c[0]).length+' Kantone im Filter')+'</small></button>').join('')+'</div>');}
+function filterDialog(){openDialog('Welche Kantone \u00fcbst du?','<p>Der Filter und die Fortschrittsregeln entsprechen deiner Originalversion. Bei allgemeinen Ansichten z\u00e4hlt die schw\u00e4chste Kategorie je Kanton.</p><div class="filter-grid">'+[['all','Alle 26 Kantone'],['untried','Noch keine richtige Antwort'],['once','Bisher h\u00f6chstens einmal richtig'],['twice','Bisher h\u00f6chstens zweimal richtig']].map(([k,sub])=>'<button class="filter-option '+(k===S.filterMode?'on':'')+'" data-action="set-filter" data-value="'+k+'"><strong>'+esc(FL[k])+'</strong><small>'+sub+'</small></button>').join('')+'</div>');}
+function difficultDialog(page=0){
+ const list=C.filter(d=>Object.values(S.wrong[d.id]||{}).reduce((a,b)=>a+b,0)>=2),pageSize=6,pages=Math.max(1,Math.ceil(list.length/pageSize));dialogPage=Math.max(0,Math.min(pages-1,page));
+ openDialog('Meine schwierigen Kantone',list.length?'<p>Im Lernmodus nachschlagen oder den Kanton aus der Fehlerliste entfernen.</p><div class="canton-list">'+list.slice(dialogPage*pageSize,(dialogPage+1)*pageSize).map(d=>'<div class="canton-row"><button data-action="learn-canton" data-id="'+d.id+'">'+flagMarkup(d,'flag-small')+'<span>'+esc(d.n)+'</span></button><button class="remove" data-action="remove-difficult" data-id="'+d.id+'" aria-label="'+esc(d.n)+' aus Fehlerliste entfernen">'+icon('close')+'</button></div>').join('')+'</div><div class="page-controls">'+button(icon('arrow'),'difficult-page','small','data-page="'+(dialogPage-1)+'" '+(dialogPage===0?'disabled':''))+'<span>'+(dialogPage+1)+' / '+pages+'</span>'+button(icon('next'),'difficult-page','small','data-page="'+(dialogPage+1)+'" '+(dialogPage===pages-1?'disabled':''))+'</div>':'<p>Noch keine schwierigen Kantone. Hier erscheinen Kantone, bei denen sich mindestens zwei falsche Antworten angesammelt haben.</p>');
+}
+function noPool(title){paint('empty',routebar(title)+'<div class="panel empty-panel">'+icon('trophy')+'<h2>In diesem Filter alles geschafft!</h2><p>W\u00e4hle einen anderen Filter oder \u00fcbe eine andere Kategorie.</p>'+button('Kantonsauswahl \u00e4ndern','filter','primary')+'</div>');}
+function gate(type,title,run,min=4){
+ if(type==='geo'&&AS.geo){run();return;}
+ if(type==='flags'&&Object.keys(AS.flags).length===26){run();return;}
+ paint('waiting',routebar(title)+'<div class="panel empty-panel"><div class="loading-illustration">'+icon(type==='flags'?'flag':'pin')+'</div><h2>Originalgrafiken vorbereiten</h2><p>Diese Vorlage l\u00e4dt ihre Kantonsflaggen und Kartendaten aus dem Internet. Einmal geladene Grafiken werden auf diesem Ger\u00e4t gespeichert. Es werden keine erfundenen Ersatzflaggen verwendet.</p><strong id="assetCount"></strong><div class="asset-progress"><span id="assetBar"></span></div><div style="display:flex;gap:10px">'+button(icon('retry')+'Erneut laden','retry-assets','primary')+(type==='flags'?button('Mit geladenen Flaggen starten','start-partial','','id="partialStart" disabled'):'')+'</div><p style="font-size:12px">Andere Quiz-Kategorien funktionieren auch ohne Bilder.</p></div>');
+ pending={type,title,run,min};assetsChanged();if(!AS.loading)loadAssets();
+}
+function availableQuizCats(cat){if(cat==='mixed')return QC.filter(c=>c[0]!=='mixed'&&fpool(c[0]).length).map(c=>c[0]);return fpool(cat).length?[cat]:[];}
+function needForQuiz(cat,title,run){const cats=availableQuizCats(cat);if(!cats.length){noPool(title);return;}if(cats.includes('outline')&&!AS.geo){gate('geo',title,()=>needForQuiz(cat,title,run));return;}if(cats.includes('flag')&&Object.keys(AS.flags).length<26){gate('flags',title,run,4);return;}run();}
+function makeQuestion(cat,last){
+ if(cat==='mixed'){const choices=availableQuizCats('mixed').filter(k=>k!=='outline'||AS.geo).filter(k=>k!=='flag'||fpool('flag').some(d=>AS.flags[d.i]));cat=pick(choices);}
+ const d=weightedPick(cat,last,cat==='flag'?new Set(Object.keys(AS.flags)):null);if(!d)return null;
+ const other=shuffle(C.filter(x=>x.id!==d.id));const base={id:d.id,cat,c:d};
+ if(cat==='lang')return {...base,multi:true,p:'Welche Amtssprache(n) hat '+d.n+'?',set:new Set(d.l),opts:shuffle([...Object.values(LN),'Englisch'])};
+ if(cat==='neighbors'){
+  const ans=[...d.nb.map(k=>BY[k].n),...d.nc.map(k=>CN[k])];
+  const dis=shuffle([...other.filter(x=>!d.nb.includes(x.i)).map(x=>x.n),...Object.keys(CN).filter(k=>!d.nc.includes(k)).map(k=>CN[k])]).slice(0,Math.max(3,7-ans.length));
+  return{...base,multi:true,p:'Welche Nachbarn hat '+d.n+'?',set:new Set(ans),opts:shuffle([...ans,...dis])};
+ }
+ const T={flag:['Zu welchem Kanton geh\u00f6rt diese Flagge?',d=>d.n,'flag'],outline:['Welcher Kanton hat diesen Umriss?',d=>d.n,'outline'],capital:['Was ist die Hauptstadt von '+d.n+'?',d=>d.c],mountain:['Was ist der h\u00f6chste Berg im Kanton '+d.n+'?',d=>d.m],river:['Welches ist der gr\u00f6sste Fluss im Kanton '+d.n+'?',d=>d.r],area:['Wie gross ist die Fl\u00e4che von '+d.n+'?',fa],population:['Wie viele Einwohner hat '+d.n+'?',fp]};
+ const [p,fn,vis]=T[cat],ans=fn(d),opts=[...new Set(other.map(fn))].filter(x=>x!==ans).slice(0,3);
+ return {...base,p,vis,ans,opts:shuffle([ans,...opts])};
+}
+function startQuiz(cat,title='Quiz',total=10,time=0){
+ closeDialog();S.selectedCat=cat;save();
+ needForQuiz(cat,title,()=>{
+  const q=makeQuestion(cat,null);if(!q){noPool(title);return;}
+  round={cat,title,total,i:0,sc:0,q,selected:new Set(),answered:false,done:false,time,deadline:time?Date.now()+time*1000:0,startXP:S.xp};
+  renderQuiz();
+ });
+}
+function renderQuiz(){
+ if(!round||round.done)return;
+ if(round.i>=round.total||(round.deadline&&Date.now()>=round.deadline)){finishQuiz();return;}
+ const q=round.q,multi=!!q.multi,catName=CATS.find(c=>c[0]===q.cat)[1];
+ let media='';
+ if(q.vis==='outline')media=outlineMarkup(q.c);
+ else media=flagMarkup(q.c,'flag-frame hero-flag',q.vis==='flag');
+ const mediaTitle=q.vis==='flag'?'Flagge erkennen':q.vis==='outline'?'Umriss erkennen':'Kanton';
+ const choices=q.opts.map((o,i)=>'<button class="option" data-action="answer" data-index="'+i+'" '+(multi?'aria-pressed="false"':'')+'>'+esc(o)+'</button>').join('');
+ const rows=multi&&q.opts.length>6?Math.ceil(q.opts.length/3):q.opts.length===5?3:2;
+ const optionsClass=multi&&q.opts.length>6?' many':q.opts.length===5?' five':'';
+ const html=routebar(round.title,'<span>'+icon('check').replace('class="icon"','class="icon" style="display:inline;width:17px;height:17px;vertical-align:-3px"')+' <b id="scoreLive">'+round.sc+'</b></span>'+(round.time?'<span class="time-chip" id="clockLive"></span>':'')+'<span class="tag">'+(round.i+1)+' / '+round.total+'</span>')+
+ '<div class="quiz-progress"><span style="width:'+100*round.i/round.total+'%"></span></div><div class="quiz-layout '+(multi?'multi'+(q.opts.length>9?' dense':''):'')+'"><div class="panel media-panel"><span class="media-hint">'+mediaTitle+'</span>'+media+(!q.vis?'<strong class="context-name">'+esc(q.c.n)+'</strong>':'')+'</div><div class="panel question-panel"><span class="eyebrow">'+esc(catName)+'</span><h2>'+esc(q.p)+'</h2>'+(multi?'<p class="q-note">'+(q.cat==='neighbors'?'Kantone & L\u00e4nder':'Amtssprachen')+' \u00b7 mehrere Antworten m\u00f6glich</p>':'')+'<div class="option-grid'+optionsClass+'" style="--rows-wide:'+Math.ceil(q.opts.length/3)+';--rows-short:'+Math.ceil(q.opts.length/4)+';grid-template-rows:repeat('+rows+',minmax(0,1fr))" id="options">'+choices+'</div></div></div><div class="feedback-bar"><div id="feedback" class="feedback" role="status">'+(multi?'W\u00e4hle alle passenden Antworten.':'Tippe auf eine Antwort.')+'</div>'+button(multi?'Antwort best\u00e4tigen':'Weiter '+icon('next'),multi?'confirm-answer':'next-question','primary','id="answerNext" disabled')+'</div>';
+ paint('q',html);
+ if(round.time){tickQuizClock();every(tickQuizClock,200);}
+}
+function tickQuizClock(){if(view!=='q'||!round||round.done||!round.deadline)return;const left=Math.max(0,Math.ceil((round.deadline-Date.now())/1000)),el=$('clockLive');if(el){el.textContent=left+' s';el.classList.toggle('urgent',left<=10);}if(left<=0)finishQuiz();}
+function selectAnswer(i){
+ if(view!=='q'||!round||round.answered||round.done||!Number.isInteger(i)||i<0||i>=round.q.opts.length)return;
+ if(round.deadline&&Date.now()>=round.deadline){finishQuiz();return;}
+ const value=round.q.opts[i],b=$('options').children[i];
+ if(round.q.multi){round.selected.has(value)?round.selected.delete(value):round.selected.add(value);b.classList.toggle('chosen',round.selected.has(value));b.setAttribute('aria-pressed',String(round.selected.has(value)));$('answerNext').disabled=!round.selected.size;}
+ else{round.selected=new Set([value]);gradeQuiz();}
+}
+function gradeQuiz(){
+ if(!round||round.answered||round.done||!round.selected.size||view!=='q')return;
+ if(round.deadline&&Date.now()>=round.deadline){finishQuiz();return;}
+ round.answered=true;const q=round.q;
+ const correct=q.multi?round.selected.size===q.set.size&&[...round.selected].every(v=>q.set.has(v)):[...round.selected][0]===q.ans;
+ const gain=mark(q.id,correct,q.cat);if(correct)round.sc++;
+ [...$('options').children].forEach((b,i)=>{b.disabled=true;b.classList.remove('chosen');const value=q.opts[i],good=q.multi?q.set.has(value):value===q.ans;b.classList.toggle('correct',good);b.classList.toggle('wrong',!good&&round.selected.has(value));});
+ const feedback=$('feedback');feedback.className='feedback '+(correct?'good':'bad');feedback.textContent=correct?'Richtig! '+(gain?'+1 EP':'Diese Kategorie ist hier bereits gemeistert.'):'Noch nicht ganz. Die passenden Antworten sind gr\u00fcn markiert.';
+ $('scoreLive').textContent=round.sc;
+ const btn=$('answerNext');btn.disabled=false;btn.dataset.action='next-question';btn.innerHTML=round.i+1>=round.total?'Ergebnis':('Weiter '+icon('next'));
+ if(prefs.autoNext)later(nextQuestion,correct?1300:2200);
+}
+function nextQuestion(){
+ if(view!=='q'||!round||!round.answered||round.done)return;
+ const last=round.q.id;round.i++;round.answered=false;round.selected=new Set();
+ if(round.i>=round.total||(round.deadline&&Date.now()>=round.deadline)){finishQuiz();return;}
+ const q=makeQuestion(round.cat,last);if(!q){finishQuiz();return;}round.q=q;renderQuiz();
+}
+function finishQuiz(){
+ if(!round||round.done)return;round.done=true;
+ const attempted=Math.min(round.total,round.i+(round.answered?1:0));
+ summary={type:'quiz',title:round.title,score:round.sc,total:attempted,goal:round.total,gain:S.xp-round.startXP,again:{cat:round.cat,title:round.title,total:round.total,time:round.time}};
+ renderSummary();
+}
+function renderSummary(){
+ const s=summary;if(!s){go('home');return;}
+ const score=s.type==='memory'?s.moves:s.score,den=s.type==='memory'?' Z\u00fcge':' / '+s.total;
+ paint('result',routebar(s.title||'Dein Ergebnis')+'<div class="panel result-panel"><div class="result-art">'+icon('trophy')+'<div class="result-score">'+score+'<span style="font-size:.38em">'+den+'</span></div><span class="eyebrow">'+(s.type==='memory'?'Alle 8 Paare gefunden':'Richtige Antworten')+'</span></div><div class="result-info"><span class="eyebrow">'+esc(lv().name)+'</span><h2>'+(s.type==='memory'?'Alle Paare gefunden!':s.score===s.total&&s.total?'Stark gespielt!':'Runde beendet!')+'</h2><p>'+(s.type==='memory'?'Du hast Flaggen und Kantonsnamen zusammengebracht.':'Jede Runde macht dich ein bisschen sicherer. Deine schwierigen Kantone bleiben zum Nachschlagen gespeichert.')+'</p><div class="result-detail">+'+s.gain+' EP \u00b7 insgesamt '+S.xp+' / '+MAXEP+'</div><div class="actions">'+button('Nochmal spielen','again','primary')+button('Spielauswahl','home')+'</div></div></div>');
+}
+
+// ------------- Map, outlines and learning. -------------
+const TC=['#c4ccca','#df806d','#dfba57','#4c977a'];
+function mapMarkup(id,kind){
+ if(!AS.geo)return '<div class="panel empty-panel" data-await-geo><div>'+icon('pin')+'</div><p>Die Kantonskarte wird einmal online geladen.</p>'+button('Kartendaten laden','retry-assets','small')+'</div>';
+ const fill=d=>kind==='stats'?TC[statsCat==='all'?tier(d.id):Math.min(cc(d.id,statsCat),MX)]:'#d3dcb5';
+ return '<div class="map-stage"><svg class="map-svg" id="'+id+'" viewBox="0 0 360 225" role="img" aria-label="Interaktive Karte der Schweizer Kantone"><rect x="0" y="0" width="360" height="225" fill="#e8f0ef"/>'+'<g data-surrounding>'+surroundingMarkup()+'</g>'+[...C].sort((a,b)=>b.a-a.a).map(d=>'<path class="sq-canton" data-canton="'+d.i+'" data-id="'+d.id+'" role="button" tabindex="0" aria-label="'+(kind==='quiz'?'Kanton ausw\u00e4hlen':esc(d.n))+'" d="'+AS.geo.paths[d.i]+'" fill="'+fill(d)+'" fill-rule="evenodd" stroke="#fff" stroke-width=".55"/>').join('')+(AS.geo.lakes?'<path class="sq-lake" fill-rule="evenodd" d="'+AS.geo.lakes+'"/>':'')+'</svg><div class="map-controls"><button data-action="zoom-out" aria-label="Karte verkleinern">'+icon('zoomout')+'</button><button data-action="zoom-reset" aria-label="Karte zur\u00fccksetzen">'+icon('retry')+'</button><button data-action="zoom-in" aria-label="Karte vergr\u00f6ssern">'+icon('zoomin')+'</button></div><span class="map-credit">BFS, GEOSTAT \u00b7 swiss-maps 2021</span></div>';
+}
+let mapController=null;
+function bindMap(id,onPick){
+ const svg=$(id);if(!svg)return;const base=[0,0,360,225];let v=[...base],last=null,moved=0,pinch=null,points=new Map();
+ function apply(){v[2]=Math.max(38,Math.min(360,v[2]));v[3]=v[2]/1.6;v[0]=Math.max(0,Math.min(360-v[2],v[0]));v[1]=Math.max(0,Math.min(225-v[3],v[1]));svg.setAttribute('viewBox',v.join(' '));}
+ function local(x,y){const m=svg.getScreenCTM();if(!m)return{x:0,y:0};return new DOMPoint(x,y).matrixTransform(m.inverse());}
+ function zoom(f,cx,cy){const r=svg.getBoundingClientRect();cx=cx??(r.left+r.width/2);cy=cy??(r.top+r.height/2);const p=local(cx,cy),fx=(p.x-v[0])/v[2],fy=(p.y-v[1])/v[3],w=Math.max(38,Math.min(360,v[2]*f)),h=w/1.6;v=[p.x-fx*w,p.y-fy*h,w,h];apply();}
+ mapController={zoomIn:()=>zoom(.68),zoomOut:()=>zoom(1.45),reset:()=>{v=[...base];apply();},getView:()=>[...v]};
+ const down=e=>{if(e.button!==undefined&&e.button!==0)return;e.preventDefault();points.set(e.pointerId,{x:e.clientX,y:e.clientY});const target=e.target.closest?.('[data-id]');if(points.size===1){last={x:e.clientX,y:e.clientY,id:target?+target.dataset.id:null};moved=0;}else{moved=100;const p=[...points.values()];pinch=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);}try{svg.setPointerCapture(e.pointerId);}catch(err){}};
+ const move=e=>{if(!points.has(e.pointerId))return;e.preventDefault();points.set(e.pointerId,{x:e.clientX,y:e.clientY});if(points.size>=2){const p=[...points.values()],d=Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y);if(pinch&&d>1)zoom(pinch/d,(p[0].x+p[1].x)/2,(p[0].y+p[1].y)/2);pinch=d;return;}if(!last)return;const dx=e.clientX-last.x,dy=e.clientY-last.y;moved+=Math.abs(dx)+Math.abs(dy);if(moved>7){const a=local(last.x,last.y),b=local(e.clientX,e.clientY);v[0]+=a.x-b.x;v[1]+=a.y-b.y;apply();}last.x=e.clientX;last.y=e.clientY;};
+ const up=e=>{if(!points.has(e.pointerId))return;const tap=points.size===1&&last&&moved<8&&e.type==='pointerup',target=last?.id;points.delete(e.pointerId);pinch=null;if(!points.size){last=null;if(tap&&target!==null)onPick(target);}else moved=100;};
+ const wheel=e=>{e.preventDefault();zoom(e.deltaY<0?.82:1.22,e.clientX,e.clientY);};
+ const key=e=>{const t=e.target.closest('[data-id]');if(t&&(e.key==='Enter'||e.key===' ')){e.preventDefault();onPick(+t.dataset.id);}};
+ svg.addEventListener('pointerdown',down,{passive:false});svg.addEventListener('pointermove',move,{passive:false});svg.addEventListener('pointerup',up);svg.addEventListener('pointercancel',up);svg.addEventListener('wheel',wheel,{passive:false});svg.addEventListener('keydown',key);
+ cleanupFns.push(()=>{points.clear();svg.removeEventListener('pointerdown',down);svg.removeEventListener('pointermove',move);svg.removeEventListener('pointerup',up);svg.removeEventListener('pointercancel',up);svg.removeEventListener('wheel',wheel);svg.removeEventListener('keydown',key);mapController=null;});
+}
+function startMap(){
+ closeDialog();if(!fpool('map').length){noPool('Auf Karte finden');return;}
+ gate('geo','Auf Karte finden',()=>{mapState={i:0,sc:0,total:10,target:weightedPick('map',null),answered:false,done:false,startXP:S.xp};renderMapQuiz();});
+}
+function renderMapQuiz(){
+ if(!mapState||mapState.done)return;
+ if(mapState.i>=mapState.total){finishMap();return;}
+ const d=mapState.target;
+ paint('mapquiz',routebar('Auf Karte finden','<span>'+mapState.sc+' richtig</span><span class="tag">'+(mapState.i+1)+' / '+mapState.total+'</span>')+'<div class="map-layout"><div class="panel map-panel">'+mapMarkup('quizMap','quiz')+'</div><aside class="panel map-aside"><span class="eyebrow">Gesuchter Kanton</span><h2>'+esc(d.n)+'</h2>'+flagMarkup(d)+'<p class="map-help" id="mapFeedback" role="status">Tippe auf den Kanton. Kleine Kantone kannst du mit + oder zwei Fingern vergr\u00f6ssern.</p>'+button('Weiter '+icon('next'),'next-map','primary','id="nextMap" disabled')+'</aside></div>');
+ bindMap('quizMap',gradeMap);
+}
+function gradeMap(id){
+ if(view!=='mapquiz'||!mapState||mapState.answered||mapState.done||!C[id])return;
+ mapState.answered=true;const correct=id===mapState.target.id;mark(mapState.target.id,correct,'map');if(correct)mapState.sc++;
+ const selected=document.querySelector('#quizMap [data-id="'+id+'"]'),target=document.querySelector('#quizMap [data-id="'+mapState.target.id+'"]');
+ if(selected)selected.setAttribute('fill',correct?'#40a878':'#de7566');if(target)target.setAttribute('fill','#40a878');
+ $('mapFeedback').textContent=correct?'Richtig!':'Das war '+C[id].n+'. Gesucht war '+mapState.target.n+'. Der richtige Kanton ist gr\u00fcn markiert.';
+ $('nextMap').disabled=false;
+ if(prefs.autoNext)later(nextMap,correct?1400:2400);
+}
+function nextMap(){if(view!=='mapquiz'||!mapState?.answered||mapState.done)return;const last=mapState.target.id;mapState.i++;mapState.answered=false;if(mapState.i>=mapState.total){finishMap();return;}mapState.target=weightedPick('map',last);if(!mapState.target){finishMap();return;}renderMapQuiz();}
+function finishMap(){if(!mapState||mapState.done)return;mapState.done=true;summary={type:'map',title:'Auf Karte finden',score:mapState.sc,total:mapState.i,goal:mapState.total,gain:S.xp-mapState.startXP};renderSummary();}
+function renderExplore(){
+ gate('geo','Schweizkarte',()=>{
+  const selected=BY[selectedMapCode]||C[0];selectedMapCode=selected.i;
+  paint('explore',routebar('Schweizkarte','<span class="tag">Frei erkunden</span>')+'<div class="map-layout"><div class="panel map-panel">'+mapMarkup('exploreMap','explore')+'</div><aside class="panel map-aside" id="mapInfo"></aside></div>');
+  function setInfo(id){const d=C[id];selectedMapCode=d.i;document.querySelectorAll('#exploreMap .sq-canton').forEach(p=>{p.setAttribute('fill',p.dataset.canton===d.i?'#ebc976':'#d3dcb5');});$('mapInfo').innerHTML='<span class="eyebrow">'+d.i+'</span><h2>'+esc(d.n)+'</h2>'+flagMarkup(d)+'<div class="map-info"><div>Hauptstadt<b>'+esc(d.c)+'</b></div><div>Sprachen<b>'+esc(d.l.join(', '))+'</b></div><div>'+fa(d)+' \u00b7 '+fp(d)+' Einwohner</div></div>'+button('Kanton kennenlernen','learn-canton','soft','data-id="'+d.id+'"');}
+  bindMap('exploreMap',setInfo);setInfo(selected.id);
+ });
+}
+function renderLearn(id){
+ if(!learnOrder||!learnOrder.length){learnOrder=shuffle(fpool());learnIndex=0;}
+ if(!learnOrder.length){noPool('Lernmodus');return;}
+ if(id!==undefined&&id!==null){const wanted=C[+id];if(wanted){let i=learnOrder.findIndex(d=>d.id===wanted.id);if(i<0){learnOrder.push(wanted);i=learnOrder.length-1;}learnIndex=i;}}
+ learnIndex=(learnIndex+learnOrder.length)%learnOrder.length;const d=learnOrder[learnIndex];
+ const neighbours=[...d.nb.map(k=>BY[k].n),...d.nc.map(k=>CN[k])];
+ paint('learn',routebar('Lernmodus','<span class="tag">Ohne Zeitdruck</span>')+'<div class="learn-layout"><div class="panel learn-visual">'+flagMarkup(d,'flag-frame hero-flag')+'<div style="min-height:0;display:flex" data-outline="'+d.i+'">'+outlineMarkup(d)+'</div></div><div class="panel learn-details"><span class="eyebrow">Kanton '+d.i+'</span><h2>'+esc(d.n)+'</h2><dl class="data-grid"><div class="data-item"><dt>Hauptstadt</dt><dd>'+esc(d.c)+'</dd></div><div class="data-item"><dt>Amtssprachen</dt><dd>'+esc(d.l.join(', '))+'</dd></div><div class="data-item"><dt>Fl\u00e4che</dt><dd>'+fa(d)+'</dd></div><div class="data-item"><dt>Einwohner</dt><dd>'+fp(d)+'</dd></div><div class="data-item"><dt>H\u00f6chster Berg</dt><dd>'+esc(d.m)+'</dd></div><div class="data-item"><dt>Gr\u00f6sster Fluss</dt><dd>'+esc(d.r)+'</dd></div><div class="data-item wide"><dt>Nachbarkantone und -l\u00e4nder</dt><dd class="neighbours">'+neighbours.map(n=>'<span class="neighbour-chip">'+esc(n)+'</span>').join('')+'</dd></div></dl><div class="learn-footer">'+button(icon('arrow'),'learn-prev','','aria-label="Vorheriger Kanton"')+'<select class="select-canton" id="learnSelect" aria-label="Kanton w\u00e4hlen">'+learnOrder.map((c,i)=>'<option value="'+i+'" '+(i===learnIndex?'selected':'')+'>'+esc(c.n)+'</option>').join('')+'</select>'+button(icon('next'),'learn-next','primary','aria-label="N\u00e4chster Kanton"')+'</div></div></div>');
+}
+function renderStats(){
+ const l=lv(),correct=C.reduce((n,d)=>n+Object.values(S.correct[d.id]||{}).reduce((a,b)=>a+b,0),0),wrong=C.reduce((n,d)=>n+Object.values(S.wrong[d.id]||{}).reduce((a,b)=>a+b,0),0);
+ const html=routebar('Mein Fortschritt',button('Punkte erkl\u00e4rt','points-help','small'))+'<div class="stats-summary"><div class="panel stat-card"><small>'+esc(l.name)+'</small><strong>'+S.xp+' / '+MAXEP+' EP</strong></div><div class="panel stat-card"><small>Schweiz gemeistert</small><strong>'+Math.round(100*S.xp/MAXEP)+' %</strong></div><div class="panel stat-card"><small>Richtige Antworten</small><strong>'+correct+'</strong></div><div class="panel stat-card"><small>Genauigkeit im gespeicherten Stand</small><strong>'+(correct+wrong?Math.round(100*correct/(correct+wrong)):0)+' %</strong></div></div><div class="progress-layout"><div class="panel map-panel">'+mapMarkup('progressMap','stats')+'</div><aside class="panel progress-side"><label for="statsCategory">Kategorie auf der Karte</label><select id="statsCategory"><option value="all">Gesamt (schw\u00e4chste Kategorie)</option>'+CATS.map(c=>'<option value="'+c[0]+'" '+(statsCat===c[0]?'selected':'')+'>'+esc(c[1])+'</option>').join('')+'</select><div class="legend">'+['Noch offen','1\u00d7 richtig','2\u00d7 richtig','3\u00d7 gemeistert'].map((x,i)=>'<span><i style="background:'+TC[i]+'"></i>'+x+'</span>').join('')+'</div><div id="progressInfo" class="map-info"></div></aside></div>';
+ paint('stats',html);
+ function update(id){const d=C[id];statsCode=d.i;$('progressInfo').innerHTML='<h3 style="margin:5px 0 11px">'+esc(d.n)+'</h3><div class="mini-cats" style="display:grid;grid-template-columns:1fr 1fr;gap:6px">'+CATS.map(c=>'<div style="padding:6px;border-radius:7px;background:var(--bg);font-size:11px"><span style="display:block;margin-bottom:3px">'+esc(c[1])+'</span>'+mastery(cc(d.id,c[0]))+'</div>').join('')+'</div>';}
+ if(AS.geo)bindMap('progressMap',update);update((BY[statsCode]||C[0]).id);
+}
+function pointsHelp(){openDialog('So z\u00e4hlen Eidgenossen-Punkte','<p>Wie in der Originaldatei bringt jede der ersten drei richtigen Antworten pro Kanton und Kategorie <strong>1 EP</strong>. Danach kannst du weiter\u00fcben, ohne zus\u00e4tzliche EP zu erhalten.</p><div class="filter-grid"><div class="filter-option"><strong>33 EP je Kanton</strong><small>11 Kategorien \u00d7 3 richtige Antworten</small></div><div class="filter-option"><strong>858 EP insgesamt</strong><small>26 Kantone \u00d7 33 EP</small></div></div><p>Die Gesamtkarte zeigt die schw\u00e4chste Kategorie jedes Kantons. Fehler werden wie bisher nach einer richtigen Antwort in derselben Kategorie aus der Fehlerliste entfernt.</p>');}
+
+// ------------- Flag/name Memory: eight pairs, original scoring. -------------
+function startMemory(){
+ closeDialog();if(!fpool('memory').length){noPool('Flaggen-Memory');return;}
+ gate('flags','Flaggen-Memory',()=>{
+  let ch=shuffle(fpool('memory').filter(d=>AS.flags[d.i])).slice(0,8);
+  if(ch.length<8)ch=[...ch,...shuffle(C.filter(d=>AS.flags[d.i]&&!ch.includes(d))).slice(0,8-ch.length)];
+  if(ch.length<8){toast('F\u00fcr Memory m\u00fcssen mindestens 8 echte Flaggen geladen sein.');return;}
+  mem={cards:shuffle([...ch.map(d=>({id:d.id,f:true})),...ch.map(d=>({id:d.id,f:false}))]),open:[],matched:new Set(),pairs:0,moves:0,lock:false,done:false,startXP:S.xp};renderMemory();
+ },8);
+}
+function renderMemory(){
+ const html=routebar('Flaggen-Memory','<span id="memoryMoves">'+mem.moves+' Z\u00fcge</span><span class="tag" id="memoryPairs">'+mem.pairs+' / 8 Paare</span>')+'<div class="panel memory-panel"><div class="memory-stage" id="memoryStage"><div class="memory-board" id="memoryBoard">'+mem.cards.map((c,i)=>'<button class="memory-card" data-action="flip-card" data-index="'+i+'" aria-label="Karte '+(i+1)+' aufdecken"><span class="memory-face memory-front">'+icon('cross')+'</span><span class="memory-face memory-back" aria-hidden="true">'+(c.f?flagMarkup(C[c.id]):esc(C[c.id].n))+'</span></button>').join('')+'</div></div></div><p class="memory-caption">Finde immer eine Flagge und den passenden Kantonsnamen.</p>';
+ paint('mem',html);fitMemory();
+ const ro=new ResizeObserver(fitMemory);ro.observe($('memoryStage'));cleanupFns.push(()=>ro.disconnect());
+}
+function flipCard(i){
+ if(view!=='mem'||!mem||mem.done||mem.lock||mem.matched.has(i)||mem.open.includes(i)||!mem.cards[i])return;
+ const b=$('memoryBoard').children[i];b.classList.add('open');b.setAttribute('aria-label',mem.cards[i].f?'Aufgedeckte Flagge':C[mem.cards[i].id].n);mem.open.push(i);
+ if(mem.open.length<2)return;
+ mem.moves++;mem.lock=true;$('memoryMoves').textContent=mem.moves+' Z\u00fcge';const [a,z]=mem.open;
+ if(mem.cards[a].id===mem.cards[z].id){
+  mem.pairs++;mem.matched.add(a);mem.matched.add(z);mark(mem.cards[a].id,true,'memory');
+  for(const i of [a,z]){const el=$('memoryBoard').children[i];el.classList.add('matched');el.disabled=true;}
+  mem.open=[];mem.lock=false;$('memoryPairs').textContent=mem.pairs+' / 8 Paare';
+  if(mem.pairs===8){mem.done=true;later(()=>{summary={type:'memory',title:'Flaggen-Memory',moves:mem.moves,gain:S.xp-mem.startXP};renderSummary();},750);}
+ }else later(()=>{for(const i of [a,z]){$('memoryBoard').children[i].classList.remove('open');$('memoryBoard').children[i].setAttribute('aria-label','Karte '+(i+1)+' aufdecken');}mem.open=[];mem.lock=false;},950);
+}
+
+// ------------- Profiles, backup, offline assets and source transparency. -------------
+function renderPlayers(){paint('players',routebar('Spieler wechseln','<span class="tag">Getrennte Spielst\u00e4nde</span>')+'<div class="profiles">'+PL.players.map((p,i)=>'<div class="panel profile-card '+(i===PL.a?'selected':'')+'"><div class="profile-big">'+(i+1)+'</div><label class="eyebrow" for="pname'+i+'">Spieler '+(i+1)+'</label><input id="pname'+i+'" data-player-name="'+i+'" value="'+esc(p.name)+'" maxlength="40" aria-label="Name von Spieler '+(i+1)+'"><span class="profile-info">'+profileXP(p.data)+' EP \u00b7 '+esc(lv(profileXP(p.data)).name)+'</span>'+button(i===PL.a?'Aktiv':'Mit diesem Spieler spielen','switch-player',i===PL.a?'soft':'primary','data-index="'+i+'" '+(i===PL.a?'disabled':''))+'</div>').join('')+'</div>');}
+function renderSettings(){paint('settings',routebar('Einstellungen')+'<div class="settings-grid"><div class="panel setting-card"><h2>Ansicht & Bedienung</h2><label class="switch"><input id="autoNext" type="checkbox" '+(prefs.autoNext?'checked':'')+'>Nach dem Feedback automatisch weiter</label><div class="segment">'+[['auto','Automatisch'],['light','Hell'],['dark','Dunkel']].map(([v,n])=>'<button class="'+(prefs.theme===v?'on':'')+'" data-action="theme" data-value="'+v+'">'+n+'</button>').join('')+'</div><div class="actions">'+button(icon('fullscreen')+'Vollbild','fullscreen','small')+'</div></div><div class="panel setting-card"><h2>Spielstand sichern</h2><p>Export und Import bleiben mit der Originalversion kompatibel. Alle Spieler werden gemeinsam gespeichert.</p><div class="actions">'+button(icon('download')+'Export','export','small')+'<label class="btn small file-label">'+icon('upload')+'Import<input id="importFile" type="file" accept="application/json,.json"></label></div></div><div class="panel setting-card"><h2>Flaggen & Karten</h2><p>Einmal online laden, danach aus dem Ger\u00e4tespeicher nutzen. Eine vollst\u00e4ndige Offlinekopie gibt es, sobald alle Grafiken lokal vorliegen.</p><span class="asset-status" style="max-width:100%;text-align:left" data-asset-status></span><div class="actions">'+button('Neu laden','retry-assets','small')+button('Offlinekopie speichern','offline-export','small','id="offlineExport" '+(!(AS.geo&&Object.keys(AS.dataFlags).length===26)?'disabled':''))+'</div></div><div class="panel setting-card"><h2>Originaldaten & Hilfe</h2><p>Die 26 Kantonsdatens\u00e4tze deines Kollegen sind unver\u00e4ndert. Fl\u00e4chen, Einwohnerzahlen und Antworten wurden nicht neu recherchiert.</p><div class="actions">'+button('Quellen & Hinweise','sources','small')+button('Spielstand zur\u00fccksetzen','reset-confirm','small danger')+'</div></div></div>');}
+function assetsDialog(){const a=assetLabel();openDialog('Grafiken auf diesem Ger\u00e4t','<p>'+esc(a.text)+'. Die Originaldatei verwendete Live-Abfragen. Diese Version speichert erfolgreich geladene Grafiken, startet aber auch bei einem Ladefehler und zeigt keine falschen Ersatzflaggen.</p><div class="filter-grid"><div class="filter-option"><strong>'+Object.keys(AS.dataFlags).length+' / 26</strong><small>Flaggen lokal gespeichert</small></div><div class="filter-option"><strong>'+(AS.geo?'Bereit':'Noch nicht geladen')+'</strong><small>Karte und Umrisse</small></div></div><p>Zum ersten Laden ben\u00f6tigst du eine Internetverbindung zu Wikimedia Commons und der Kartendatenquelle.</p>'+button('Laden erneut versuchen','retry-assets','primary'));}
+function sourcesDialog(){openDialog('Quellen & Hinweise','<div class="sources-body"><h3>Inhalte aus deiner HTML-Datei</h3><p>26 Kantone, Namen, Hauptst\u00e4dte, Sprachen, Fl\u00e4chen, Einwohnerzahlen, Berge, Fl\u00fcsse und Nachbarschaften: unver\u00e4ndert aus <b>SwizQuiz (1).html</b>. Die Werte sind nicht als aktuelle amtliche Statistik verifiziert.</p><h3>Grafiken aus den Quellen der Vorlage</h3><p>Flaggen: Wikimedia Commons. Karte und Umrisse: swiss-maps, Datensatz 2021; Bundesamt f\u00fcr Statistik (BFS), GEOSTAT. Der Originaldatensatz nennt eine nichtkommerzielle Nutzung mit Quellenangabe.</p><div class="legal">Die Proportionen geladener Flaggen bleiben unver\u00e4ndert. Fehlen echte Grafiken, bleibt die betreffende Aufgabe im Ladebildschirm. Es werden keine Ersatzflaggen mit geratenen Symbolen eingesetzt.</div><h3>Tablet Edition '+VERSION+'</h3><p>Vollbild ist eine Browserfunktion und wird durch Antippen eingeschaltet. Lernfortschritt bleibt lokal. Ein Import ersetzt die vorhandenen Spieler; vorher exportieren.</p></div>');}
+function downloadBlob(name,blob){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);}
+function exportProgress(){save();downloadBlob('swizquiz-spielstand.json',new Blob([JSON.stringify(PL,null,2)],{type:'application/json'}));toast('Spielstand exportiert.');}
+let incoming=null;
+async function importProgress(file){
+ if(!file)return;if(file.size>2500000){toast('Diese Datei ist zu gross.');return;}
+ try{incoming=validatePlayerFile(JSON.parse(await file.text()));openDialog('Spielstand importieren?','<p>Die Datei enth\u00e4lt '+incoming.players.length+' Spieler. Sie ersetzt die bisherigen Spieler auf diesem Browser. Ein Export vor dem Import ist empfehlenswert.</p>'+button('Spielstand ersetzen','import-confirm','primary')+button('Abbrechen','close-dialog'));}
+ catch(e){incoming=null;toast('Import nicht m\u00f6glich: '+e.message);}
+}
+function resetDialog(){openDialog('Diesen Spielstand l\u00f6schen?','<p>Nur der Fortschritt von <b>'+esc(PL.players[PL.a].name)+'</b> wird zur\u00fcckgesetzt. Die anderen Spieler und die geladenen Grafiken bleiben erhalten.</p>'+button('Jetzt zur\u00fccksetzen','reset-player','danger')+button('Abbrechen','close-dialog','primary'));}
+async function exportOffline(){
+ if(!AS.geo||Object.keys(AS.dataFlags).length!==26){toast('Bitte zuerst alle Flaggen und die Karte laden.');return;}
+ const doc=new DOMParser().parseFromString(SHELL,'text/html');
+ const embeddedEl=doc.getElementById('sq-embedded');embeddedEl.textContent=JSON.stringify({flags:AS.dataFlags,geo:AS.geo}).replace(/</g,'\\u003c');
+ doc.querySelector('link[rel=manifest]')?.remove();
+ // The file includes content assets but never another person's stored profile data.
+ downloadBlob('SwizQuiz_Offline_Tablet.html',new Blob(['<!doctype html>\n'+doc.documentElement.outerHTML],{type:'text/html;charset=utf-8'}));toast('Offlinekopie gespeichert. Spielst\u00e4nde bitte separat exportieren.');
+}
+
+// ------------- Delegated controls and boot. -------------
+const ACTIONS={
+ home:()=>go('home'),qcat:()=>go('qcat'),learn:()=>go('learn'),smap:()=>go('smap'),stats:()=>go('stats'),players:()=>go('players'),settings:()=>go('settings'),
+ fullscreen:toggleFullscreen,filter:filterDialog,difficult:()=>difficultDialog(0),sources:sourcesDialog,assets:assetsDialog,'points-help':pointsHelp,
+ 'close-dialog':closeDialog,
+ 'set-filter':el=>{S.filterMode=el.dataset.value;learnOrder=null;save();closeDialog();go('home');},
+ 'category':el=>startQuiz(el.dataset.cat,'Quiz \u00b7 '+QC.find(c=>c[0]===el.dataset.cat)[1],10),
+ flash:()=>startQuiz('flag','Flaggen-Blitz',30,60),duel:()=>startQuiz('capital','Hauptstadt-Duell',10),
+ 'outline-game':()=>startQuiz('outline','Umriss erkennen',8),'map-game':startMap,memory:startMemory,
+ answer:el=>selectAnswer(+el.dataset.index),'confirm-answer':gradeQuiz,'next-question':nextQuestion,'next-map':nextMap,
+ 'zoom-in':()=>mapController?.zoomIn(),'zoom-out':()=>mapController?.zoomOut(),'zoom-reset':()=>mapController?.reset(),
+ 'learn-prev':()=>{learnIndex--;renderLearn();},'learn-next':()=>{learnIndex++;renderLearn();},'learn-canton':el=>{closeDialog();go('learn',+el.dataset.id);},
+ 'difficult-page':el=>difficultDialog(+el.dataset.page),'remove-difficult':el=>{delete S.wrong[+el.dataset.id];save();difficultDialog(dialogPage);},
+ 'flip-card':el=>flipCard(+el.dataset.index),
+ 'switch-player':el=>{const i=+el.dataset.index;if(!PL.players[i])return;save();PL.a=i;S=PL.players[i].data;learnOrder=null;save();go('home');},
+ theme:el=>{prefs.theme=el.dataset.value;savePrefs();renderSettings();},
+ export:exportProgress,'offline-export':exportOffline,
+ 'import-confirm':()=>{if(!incoming)return;PL=incoming;incoming=null;S=PL.players[PL.a].data;loadWarning='';learnOrder=null;PL.players.forEach(p=>p.data.xp=profileXP(p.data));save();closeDialog();go('home');toast('Spielstand importiert.');},
+ 'reset-confirm':resetDialog,'reset-player':()=>{S=dp();loadWarning='';learnOrder=null;save();closeDialog();go('home');toast('Spielstand zur\u00fcckgesetzt.');},
+ 'retry-assets':()=>{loadAssets(true);toast('Grafiken werden erneut geladen.');},
+ 'start-partial':()=>{if(!pending)return;const p=pending;if(Object.keys(AS.flags).length<(p.min||4))return;pending=null;routeCleanup();p.run();},
+ again:()=>{if(!summary)return;if(summary.type==='memory')startMemory();else if(summary.type==='map')startMap();else startQuiz(summary.again.cat,summary.again.title,summary.again.total,summary.again.time);}
+};
+document.addEventListener('click',e=>{const el=e.target.closest('[data-action]');if(!el||el.disabled)return;const fn=ACTIONS[el.dataset.action];if(fn){e.preventDefault();fn(el);}});
+document.addEventListener('change',e=>{
+ const el=e.target;
+ if(el.id==='autoNext'){prefs.autoNext=el.checked;savePrefs();}
+ if(el.id==='learnSelect'){learnIndex=+el.value;renderLearn();}
+ if(el.id==='statsCategory'){statsCat=el.value;renderStats();}
+ if(el.id==='importFile')importProgress(el.files[0]);
+ if(el.matches('[data-player-name]')){const i=+el.dataset.playerName;PL.players[i].name=el.value.trim().slice(0,40)||'Spieler '+(i+1);save();el.value=PL.players[i].name;}
+});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){tickQuizClock();scheduleLayout();}});
+window.addEventListener('online',()=>loadAssets());
+$('rotateScreen').innerHTML=icon('rotate')+'<h2>Bitte quer drehen</h2><p>So haben die grosse Flagge und alle Antworten gemeinsam Platz.</p>'+button(icon('fullscreen')+'Vollbild','fullscreen');
+renderHome();scheduleLayout();
+if(loadWarning)openDialog('Gespeicherten Stand pr\u00fcfen','<p>'+esc(loadWarning)+'</p>'+button('Verstanden','close-dialog','primary'));
+if(!storageOK)toast('Der Browser blockiert lokale Speicherung. Bitte Spielst\u00e4nde regelm\u00e4ssig exportieren.');
+if(!window.__SQ_TEST__)loadAssets();
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)&&!window.__SQ_TEST__){navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(r=>r.update().catch(()=>{})).catch(()=>{});}
+// Read-only source data plus a small QA hook, enabled only in an explicit test harness.
+if(window.__SQ_TEST__){window.__SQ={VERSION,C,R,CATS,QC,MAXEP,AS,get state(){return{view,PL,S,prefs,round,mem,mapState,summary,pending,routeToken};},go,startQuiz,startMap,startMemory,makeQuestion,gradeQuiz,nextQuestion,gradeMap,nextMap,flipCard,mark,profileXP,validatePlayerFile,exportProgress,loadAssets,makeGeo,assetsChanged,applyTheme,renderLearn,renderStats,dbPut,dbGet,setPrefs(p){Object.assign(prefs,p);savePrefs();},setPlayerFile(raw){PL=validatePlayerFile(raw);S=PL.players[PL.a].data;PL.players.forEach(p=>p.data.xp=profileXP(p.data));save();},setAssetFixtures(g,flags){AS.geo=g;AS.geoState='ready';AS.flags=flags;AS.dataFlags=flags;AS.flagState='ready';assetsChanged();},get map(){return mapController;}};}
+})();
+
+</script>
+</body>
+</html>

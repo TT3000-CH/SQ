@@ -1,0 +1,75 @@
+PRÜFPROTOKOLL - SWIZQUIZ TABLET EDITION 2.0.0
+=============================================
+
+VORLAGE
+Die R-Datentabelle wurde maschinell mit der bereitgestellten Originaldatei
+verglichen. Ergebnis: alle 26 Kantonsdatensätze unverändert.
+
+DARSTELLUNG
+172 Browser-Darstellungsprüfungen, 0 fehlgeschlagen,
+0 unbehandelte JavaScript-Fehler.
+
+Fenstergrössen in CSS-Pixeln / emulierte Pixeldichte:
+  960 x 600 / 1
+  960 x 520 / 2
+  1024 x 600 / 2
+  1280 x 800 / 1.5
+  1920 x 1200 / 2
+  960 x 500 / 2
+
+Geprüft wurden Startseite, Kategorien, Spieler, Einstellungen, Statistik,
+Lernkarten, Schweizkarte, Kartenquiz, Memory, alle Fragekategorien und alle
+26 Nachbarschaftsfragen bei zwei kompakten Fenstergrössen.
+
+Die Prüfung betrachtet nicht nur die Seite insgesamt, sondern auch den
+inneren Text-Overflow in Karten, Antwortflächen, Spielbereichen und Header.
+Alle Quizantworten hatten in den geprüften Ansichten mindestens 48 CSS-Pixel
+Höhe. Es wurde kein vertikaler oder horizontaler Seiten-Scroll festgestellt.
+
+FUNKTIONALE BROWSERPRÜFUNGEN
+13 Prüfgruppen bestanden; 0 unbehandelte JavaScript-Fehler.
+- Original data, three-player file shape, EP cap and per-category error clearing retained
+- Three-question round completed through touch controls; duplicate grade/next calls cannot duplicate points
+- Neighbour and language multi-select: exact-set grading, wrong feedback, correct completion
+- Auto-next advances once, with no stale navigation after leaving a round
+- Fullscreen on/off through browser API and resize retain active quiz state
+- Timed flag round keeps the same wall-clock deadline and ends on expiry
+- Memory has eight unique flag/name pairs, turn lock, safe restart, complete touch solution
+- Map zoom/pan, drag does not grade, touch selection, ten questions, duplicate scoring guarded
+- Three separate profiles, safe rename, compatible download export, confirmed import, invalid import rejected
+- Theme changes and reset only the active profile
+- Downloaded offline HTML contains all saved TEST graphics and no profile data; fresh offline boot verified
+- Unreachable/missing graphics: honest loader, usable text quiz, deferred map starts when assets arrive
+- Partial flag loading requires explicit opt-in and only asks available flags
+
+VOLLSTÄNDIG GESPIELTE ABLÄUFE
+- Quizrunde mit grossen Antwortflächen, inklusive Doppelaufrufschutz.
+- Sprachen- und Nachbarfragen mit Mehrfachauswahl.
+- Flaggen-Memory mit 8 korrekten Flagge/Name-Paaren.
+- Kartenrunde mit 10 Fragen sowie Touch-Pan ohne versehentliche Antwort.
+- Verkürzter Flaggen-Blitz-Timertest zur Prüfung des Ablaufs.
+- Export/Import über tatsächliche Browser-Downloads und Dateiauswahl.
+- Vollbild im Browser ein-/ausgeschaltet und laufende Runde beim Resize erhalten.
+
+WEITERE TESTS
+- TopoJSON-Dekodierung/Projektion an 26 synthetischen Polygonen getestet.
+- Service Worker separat mit Cache-/Fetch-Mocks geprüft:
+  Installation, 5 Kerndateien, Aktivierung, ausschliesslich eigener Cachebereich,
+  Online-Navigation, Offline-HTML, Grafikcache, Fehlerantwort für unbekannte
+  Offline-Dateien und keine Eingriffe in andere Apps.
+- HTML-JavaScript und Service Worker mit node --check geprüft.
+- Manifest als JSON eingelesen; ZIP-Inhalt und index.html auf Gleichheit geprüft.
+
+GRENZEN DIESER PRÜFUNG
+Getestet in Chromium mit emulierter Touch-Bedienung und Pixeldichte, nicht
+auf einem physischen Galaxy Tab A11+.
+
+Live-Abrufe von Wikimedia Commons und den Karten-CDNs waren in der
+Entwicklungsumgebung gesperrt. Daher stammen die Grafiken in den Tests aus
+sichtbar markierten TEST-SVGs; die Karten aus synthetischen Rechteck- bzw.
+TopoJSON-Daten. Diese Testdateien sind NICHT im Upload-Paket enthalten.
+Die Live-Erreichbarkeit und korrekte Auflösung jeder realen Grafikquelle
+wurden damit nicht abschliessend geprüft.
+
+Eine echte Android-PWA-Installation und ein Upload in das persönliche
+GitHub-Repository wurden nicht ausgeführt.
